@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TotalWarDLA.Models.SoldierFormation>
+﻿@model IEnumerable<TotalWarDLA.Models.Formation>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,10 +22,10 @@
                 @Html.DisplayNameFor(model => model.FormationName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HorseIdHorseNavigation)
+                @Html.DisplayNameFor(model => model.IdHorseNavigation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoldierModelIdSoldierNavigation)
+                @Html.DisplayNameFor(model => model.IdSoldierNavigation)
             </th>
             <th></th>
         </tr>
@@ -43,10 +43,10 @@
                 @Html.DisplayFor(modelItem => item.FormationName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HorseIdHorseNavigation.IdHorse)
+                @Html.DisplayFor(modelItem => item.IdHorseNavigation.IdHorse)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SoldierModelIdSoldierNavigation.IdSoldier)
+                @Html.DisplayFor(modelItem => item.IdSoldierNavigation.IdSoldier)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdFormation">Edit</a> |

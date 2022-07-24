@@ -19,12 +19,12 @@ namespace TotalWarDLA.Models
 
         public virtual DbSet<Barding> Bardings { get; set; }
         public virtual DbSet<Faction> Factions { get; set; }
-        public virtual DbSet<FactionSoldierFormation> FactionSoldierFormations { get; set; }
+        public virtual DbSet<FactionFormation> FactionFormations { get; set; }
         public virtual DbSet<Horse> Horses { get; set; }
         public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<ItemSoldierFormation> ItemSoldierFormations { get; set; }
-        public virtual DbSet<SoldierFormation> SoldierFormations { get; set; }
-        public virtual DbSet<SoldierFormationTrait> SoldierFormationTraits { get; set; }
+        public virtual DbSet<ItemFormation> ItemFormations { get; set; }
+        public virtual DbSet<Formation> Formations { get; set; }
+        public virtual DbSet<FormationTrait> FormationTraits { get; set; }
         public virtual DbSet<SoldierModel> SoldierModels { get; set; }
         public virtual DbSet<Trait> Traits { get; set; }
 
@@ -57,34 +57,37 @@ namespace TotalWarDLA.Models
                 entity.Property(e => e.FactionName).HasMaxLength(255);
             });
 
-            modelBuilder.Entity<FactionSoldierFormation>(entity =>
+            modelBuilder.Entity<FactionFormation>(entity =>
             {
-                entity.HasKey(e => new { e.FactionsIdFaction, e.SoldierFormationsIdFormation });
+                entity.HasKey(e => new { e.IdFaction, e.IdFormation });
 
-                entity.ToTable("FactionSoldierFormation");
+                entity.ToTable("FactionFormation");
 
-                entity.HasIndex(e => e.SoldierFormationsIdFormation, "IX_FactionSoldierFormation_SoldierFormationsIdFormation");
+                entity.HasIndex(e => e.IdFormation, "IX_FactionFormation_FormationsIdFormation");
 
-                entity.HasOne(d => d.FactionsIdFactionNavigation)
-                    .WithMany(p => p.FactionSoldierFormations)
-                    .HasForeignKey(d => d.FactionsIdFaction);
+                entity.HasOne(d => d.IdFactionNavigation)
+                    .WithMany(p => p.FactionFormations)
+                    .HasForeignKey(d => d.IdFaction)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne(d => d.SoldierFormationsIdFormationNavigation)
-                    .WithMany(p => p.FactionSoldierFormations)
-                    .HasForeignKey(d => d.SoldierFormationsIdFormation);
+                entity.HasOne(d => d.IdFormationNavigation)
+                    .WithMany(p => p.FactionFormations)
+                    .HasForeignKey(d => d.IdFormation)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Horse>(entity =>
             {
                 entity.HasKey(e => e.IdHorse);
 
-                entity.HasIndex(e => e.BardingIdBarding, "IX_Horses_BardingIdBarding");
+                entity.HasIndex(e => e.IdBarding, "IX_Horses_IdBarding");
 
                 entity.Property(e => e.BreedName).HasMaxLength(255);
 
-                entity.HasOne(d => d.BardingIdBardingNavigation)
+                entity.HasOne(d => d.IdBardingNavigation)
                     .WithMany(p => p.Horses)
-                    .HasForeignKey(d => d.BardingIdBarding);
+                    .HasForeignKey(d => d.IdBarding)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Item>(entity =>
@@ -94,57 +97,63 @@ namespace TotalWarDLA.Models
                 entity.Property(e => e.ItemName).HasMaxLength(255);
             });
 
-            modelBuilder.Entity<ItemSoldierFormation>(entity =>
+            modelBuilder.Entity<ItemFormation>(entity =>
             {
-                entity.HasKey(e => new { e.ItemsIdItem, e.SoldierFormationsIdFormation });
+                entity.HasKey(e => new { e.IdItem, e.IdFormation });
 
-                entity.ToTable("ItemSoldierFormation");
+                entity.ToTable("ItemFormation");
 
-                entity.HasIndex(e => e.SoldierFormationsIdFormation, "IX_ItemSoldierFormation_SoldierFormationsIdFormation");
+                entity.HasIndex(e => e.IdFormation, "IX_ItemFormation_FormationsIdFormation");
 
-                entity.HasOne(d => d.ItemsIdItemNavigation)
-                    .WithMany(p => p.ItemSoldierFormations)
-                    .HasForeignKey(d => d.ItemsIdItem);
+                entity.HasOne(d => d.IdItemNavigation)
+                    .WithMany(p => p.ItemFormations)
+                    .HasForeignKey(d => d.IdItem)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne(d => d.SoldierFormationsIdFormationNavigation)
-                    .WithMany(p => p.ItemSoldierFormations)
-                    .HasForeignKey(d => d.SoldierFormationsIdFormation);
+                entity.HasOne(d => d.IdFormationNavigation)
+                    .WithMany(p => p.ItemFormations)
+                    .HasForeignKey(d => d.IdFormation)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<SoldierFormation>(entity =>
+            modelBuilder.Entity<Formation>(entity =>
             {
                 entity.HasKey(e => e.IdFormation);
 
-                entity.HasIndex(e => e.HorseIdHorse, "IX_SoldierFormations_HorseIdHorse");
+                entity.HasIndex(e => e.IdHorse, "IX_Formations_IdHorse" /*what are thowse at the end */);
 
-                entity.HasIndex(e => e.SoldierModelIdSoldier, "IX_SoldierFormations_SoldierModelIdSoldier");
+                entity.HasIndex(e => e.IdSoldier, "IX_Formations_IdSoldier");
 
                 entity.Property(e => e.FormationName).HasMaxLength(255);
 
-                entity.HasOne(d => d.HorseIdHorseNavigation)
-                    .WithMany(p => p.SoldierFormations)
-                    .HasForeignKey(d => d.HorseIdHorse);
+                entity.HasOne(d => d.IdHorseNavigation)
+                    .WithMany(p => p.Formations)
+                    .HasForeignKey(d => d.IdHorse)
+                    .OnDelete(DeleteBehavior.SetNull);
 
-                entity.HasOne(d => d.SoldierModelIdSoldierNavigation)
-                    .WithMany(p => p.SoldierFormations)
-                    .HasForeignKey(d => d.SoldierModelIdSoldier);
+                entity.HasOne(d => d.IdSoldierNavigation)
+                    .WithMany(p => p.Formations)
+                    .HasForeignKey(d => d.IdSoldier)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<SoldierFormationTrait>(entity =>
+            modelBuilder.Entity<FormationTrait>(entity =>
             {
-                entity.HasKey(e => new { e.SoldierFormationIdFormation, e.TraitsIdTrait });
+                entity.HasKey(e => new { e.IdFormation, e.IdTrait });
 
-                entity.ToTable("SoldierFormationTrait");
+                entity.ToTable("FormationTrait");
 
-                entity.HasIndex(e => e.TraitsIdTrait, "IX_SoldierFormationTrait_TraitsIdTrait");
+                entity.HasIndex(e => e.IdTrait, "IX_FormationTrait_TraitsIdTrait");
 
-                entity.HasOne(d => d.SoldierFormationIdFormationNavigation)
-                    .WithMany(p => p.SoldierFormationTraits)
-                    .HasForeignKey(d => d.SoldierFormationIdFormation);
+                entity.HasOne(d => d.IdFormationNavigation)
+                    .WithMany(p => p.FormationTraits)
+                    .HasForeignKey(d => d.IdFormation)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne(d => d.TraitsIdTraitNavigation)
-                    .WithMany(p => p.SoldierFormationTraits)
-                    .HasForeignKey(d => d.TraitsIdTrait);
+                entity.HasOne(d => d.IdTraitNavigation)
+                    .WithMany(p => p.FormationTraits)
+                    .HasForeignKey(d => d.IdTrait)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<SoldierModel>(entity =>

@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.HorseStrength)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BardingIdBardingNavigation)
+                @Html.DisplayNameFor(model => model.IdBardingNavigation)
             </th>
             <th></th>
         </tr>
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.HorseStrength)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BardingIdBardingNavigation.IdBarding)
+                @Html.DisplayFor(modelItem => item.IdBardingNavigation.IdBarding)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdHorse">Edit</a> |

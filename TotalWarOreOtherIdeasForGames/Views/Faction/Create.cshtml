@@ -1,4 +1,4 @@
-﻿@model TotalWarDLA.Models.Faction
+﻿@model TotalWarDLA.ViewModel.FactionFormationViewModel;
 
 @{
     ViewData["Title"] = "Create";
@@ -11,14 +11,23 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="form-group">
-                <label asp-for="FactionName" class="control-label"></label>
-                <input asp-for="FactionName" class="control-label" />
-                <span asp-validation-for="FactionName"></span>
+                <label asp-for="faction.FactionName" class="control-label"></label>
+                <input asp-for="faction.FactionName" class="control-label" />
+                <span asp-validation-for="faction.FactionName"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FactionDescription" class="control-label"></label>
-                <input asp-for="FactionDescription" class="form-group" />
-                <span asp-validation-for="FactionDescription"></span>
+                <label asp-for="faction.FactionDescription" class="control-label"></label>
+                <input asp-for="faction.FactionDescription" class="form-group" />
+                <span asp-validation-for="faction.FactionDescription"></span>
+            </div>
+            <div class="form-group">
+                <-- how is this gonna be send -->
+                <select asp-for="ListFormations" multiple>
+                    @foreach(Formation formation in Model.ListFormations)
+                    {
+                        <option asp-for="formation">@formation.FormationName</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

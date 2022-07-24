@@ -9,13 +9,13 @@ namespace TotalWarDLA.Models
     {
         public Faction()
         {
-            FactionSoldierFormations = new HashSet<FactionSoldierFormation>();
+            FactionFormations = new HashSet<FactionFormation>();
         }
 
         public int IdFaction { get; set; }
         public string FactionName { get; set; }
         public string FactionDescription { get; set; }
 
-        public virtual ICollection<FactionSoldierFormation> FactionSoldierFormations { get; set; }
+        public virtual ICollection<FactionFormation> FactionFormations { get; set; }
     }
 }

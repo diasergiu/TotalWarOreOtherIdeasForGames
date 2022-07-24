@@ -9,7 +9,7 @@ namespace TotalWarDLA.Models
     {
         public SoldierModel()
         {
-            SoldierFormations = new HashSet<SoldierFormation>();
+            Formations = new HashSet<Formation>();
         }
 
         public int IdSoldier { get; set; }
@@ -20,6 +20,6 @@ namespace TotalWarDLA.Models
         public int Acuracy { get; set; }
         public string SoldierName { get; set; }
 
-        public virtual ICollection<SoldierFormation> SoldierFormations { get; set; }
+        public virtual ICollection<Formation> Formations { get; set; }
     }
 }

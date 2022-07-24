@@ -9,7 +9,7 @@ namespace TotalWarDLA.Models
     {
         public Horse()
         {
-            SoldierFormations = new HashSet<SoldierFormation>();
+            Formations = new HashSet<Formation>();
         }
 
         public int IdHorse { get; set; }
@@ -18,9 +18,9 @@ namespace TotalWarDLA.Models
         public int DefenceModifiered { get; set; }
         public int HorseStamina { get; set; }
         public int HorseStrength { get; set; }
-        public int? BardingIdBarding { get; set; }
+        public int? IdBarding { get; set; }
 
-        public virtual Barding BardingIdBardingNavigation { get; set; }
-        public virtual ICollection<SoldierFormation> SoldierFormations { get; set; }
+        public virtual Barding IdBardingNavigation { get; set; }
+        public virtual ICollection<Formation> Formations { get; set; }
     }
 }

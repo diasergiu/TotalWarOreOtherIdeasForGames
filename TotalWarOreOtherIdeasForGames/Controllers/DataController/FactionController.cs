@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TotalWarDLA.Models;
+using TotalWarDLA.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
@@ -22,15 +24,22 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(await _context.Factions.ToListAsync());
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            // nu imi place cum arata parte asta si ar trebui sa ma uit la ce este view models mai mult simt ca nu invat nimic aici doar aplic ce stiu deja
+            FactionFormationViewModel factionFormationViewModel = new FactionFormationViewModel();
+            factionFormationViewModel.ListFormations = await _context.Formations.ToListAsync();
+            return View(factionFormationViewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FactionName,FactionDescription")]Faction faction)
+        public async Task<IActionResult> Create(/*[Bind("FactionName,FactionDescription,ListFormation")]*/[FromForm] FactionFormationViewModel factionFormationViewModel)
         {
-            _context.Factions.Add(faction);
+            _context.Factions.Add(factionFormationViewModel.faction);
+            foreach(Formation formation in factionFormationViewModel.ListFormations)
+            {
+                _context.FactionFormations.Add(new FactionFormation(factionFormationViewModel.faction, formation));
+            }
             await _context.SaveChangesAsync();
             // look if this works 
             return View("Create");
@@ -56,7 +65,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,[Bind("FactionName,FactionDescription")]Faction faction)
+        public async Task<IActionResult> Edit(int id,[Bind("IdFaction,FactionName,FactionDescription")]Faction faction)
         {
             if (faction.IdFaction != id) {
                 return NotFound();

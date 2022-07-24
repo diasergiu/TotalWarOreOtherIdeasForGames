@@ -1,7 +1,7 @@
 ﻿What i havent done:
 Nake a controller that can handle relationship tables 
 Make so that i can manipulate the many to many ralationship in both sides 
-You should be abe to assingh traights From soldierFormation
+You should be abe to assingh traights From Formation
 
 
 Filtering : ( soldiersFormation with: factions, horses(if they have one), attack, defance, Stamina) 

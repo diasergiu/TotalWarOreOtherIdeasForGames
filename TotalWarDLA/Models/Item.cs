@@ -9,7 +9,7 @@ namespace TotalWarDLA.Models
     {
         public Item()
         {
-            ItemSoldierFormations = new HashSet<ItemSoldierFormation>();
+            ItemFormations = new HashSet<ItemFormation>();
         }
 
         public int IdItem { get; set; }
@@ -17,6 +17,6 @@ namespace TotalWarDLA.Models
         public int SpeedCost { get; set; }
         public string ItemName { get; set; }
 
-        public virtual ICollection<ItemSoldierFormation> ItemSoldierFormations { get; set; }
+        public virtual ICollection<ItemFormation> ItemFormations { get; set; }
     }
 }

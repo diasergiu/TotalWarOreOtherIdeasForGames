@@ -21,7 +21,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Horse
         public async Task<IActionResult> Index()
         {
-            var totalWarWanaBeContext = _context.Horses.Include(h => h.BardingIdBardingNavigation);
+            var totalWarWanaBeContext = _context.Horses.Include(h => h.IdBardingNavigation);
             return View(await totalWarWanaBeContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
 
             var horse = await _context.Horses
-                .Include(h => h.BardingIdBardingNavigation)
+                .Include(h => h.IdBardingNavigation)
                 .FirstOrDefaultAsync(m => m.IdHorse == id);
             if (horse == null)
             {
@@ -47,7 +47,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Horse/Create
         public IActionResult Create()
         {
-            ViewData["BardingIdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding");
+            ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,BardingIdBarding")] Horse horse)
+        public async Task<IActionResult> Create([Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BardingIdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.BardingIdBarding);
+            ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.IdBarding);
             return View(horse);
         }
 
@@ -81,7 +81,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            ViewData["BardingIdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.BardingIdBarding);
+            ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.IdBarding);
             return View(horse);
         }
 
@@ -90,7 +90,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,BardingIdBarding")] Horse horse)
+        public async Task<IActionResult> Edit(int id, [Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
         {
             if (id != horse.IdHorse)
             {
@@ -117,7 +117,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BardingIdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.BardingIdBarding);
+            ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.IdBarding);
             return View(horse);
         }
 
@@ -130,7 +130,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
 
             var horse = await _context.Horses
-                .Include(h => h.BardingIdBardingNavigation)
+                .Include(h => h.IdBardingNavigation)
                 .FirstOrDefaultAsync(m => m.IdHorse == id);
             if (horse == null)
             {
