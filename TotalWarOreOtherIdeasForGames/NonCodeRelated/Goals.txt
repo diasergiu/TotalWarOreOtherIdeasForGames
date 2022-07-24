@@ -1,0 +1,24 @@
+﻿What i havent done:
+Nake a controller that can handle relationship tables 
+Make so that i can manipulate the many to many ralationship in both sides 
+You should be abe to assingh traights From soldierFormation
+
+
+Filtering : ( soldiersFormation with: factions, horses(if they have one), attack, defance, Stamina) 
+Multiple delete 
+Searching
+At the end of this i will have pagination
+encripted password
+Immage incription into database
+Log in
+Multiple databases for 1 application
+
+
+
+From microsof:
+Web apps MVC
+Fundamentals
+Data Access
+Test debug, and troubleshoot
+Performance
+Model buinder

@@ -1,0 +1,5 @@
+﻿why do i need to install the nudget pakages in both DAL class library and the .net core project
+What is a service
+why Configuration get his connection string from appSettings Json by default
+installed entityFrameworkCore design in wowalWarOreoetherIdeasForGames apperantly it is used for migration, it might be better to be but in the DLA project
+what is UseHttpsRedirection and is it usefull when you are log out and go backwards ( example you are logd in you are in user/userInfo/password you log out, if you go backwards you go back to the log in page instead of user/userInfo) 

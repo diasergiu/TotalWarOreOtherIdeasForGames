@@ -1,0 +1,1 @@
+﻿i dont know what roling back the entityFrameworkCore did to the fuunctionality of the curent models functionality

@@ -1,0 +1,59 @@
+﻿@model TotalWarDLA.Models.Horse
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Horse</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdHorse" />
+            <div class="form-group">
+                <label asp-for="AttackModifier" class="control-label"></label>
+                <input asp-for="AttackModifier" class="form-control" />
+                <span asp-validation-for="AttackModifier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BreedName" class="control-label"></label>
+                <input asp-for="BreedName" class="form-control" />
+                <span asp-validation-for="BreedName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DefenceModifiered" class="control-label"></label>
+                <input asp-for="DefenceModifiered" class="form-control" />
+                <span asp-validation-for="DefenceModifiered" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorseStamina" class="control-label"></label>
+                <input asp-for="HorseStamina" class="form-control" />
+                <span asp-validation-for="HorseStamina" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorseStrength" class="control-label"></label>
+                <input asp-for="HorseStrength" class="form-control" />
+                <span asp-validation-for="HorseStrength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BardingIdBarding" class="control-label"></label>
+                <select asp-for="BardingIdBarding" class="form-control" asp-items="ViewBag.BardingIdBarding"></select>
+                <span asp-validation-for="BardingIdBarding" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

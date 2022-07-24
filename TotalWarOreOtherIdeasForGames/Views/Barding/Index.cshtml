@@ -1,0 +1,44 @@
+﻿@model IEnumerable<TotalWarDLA.Models.Barding>
+@{ 
+    ViewData["Tital"] = "Index";
+}
+
+<h1> Index</h1>
+<p>
+    <a asp-action="Create">Create</a>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BardingName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ArmorValue)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BardingName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ArmorValue)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdBarding">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.IdBarding">Details</a>   
+                        <form asp-action="Delete" asp-route-id="@item.IdBarding" method="post">
+                            <div class="form-group">
+                                <input type="submit" value="Delete" class="btn btn-primary" />
+                            </div>
+                        </form>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</p>
