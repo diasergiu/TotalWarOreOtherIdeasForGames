@@ -12,5 +12,7 @@ namespace TotalWarDLA.ViewModel
         public Faction faction { get; set; }
         public IList<Formation> ListFormations { get; set; }
 
+        public int[] IdFormations { get; set; }
+
     }
 }

@@ -1,0 +1,43 @@
+﻿@model TotalWarDLA.Models.Item
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Item</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateItem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StaminaCost" class="control-label"></label>
+                <input asp-for="StaminaCost" class="form-control" />
+                <span asp-validation-for="StaminaCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpeedCost" class="control-label"></label>
+                <input asp-for="SpeedCost" class="form-control" />
+                <span asp-validation-for="SpeedCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemName" class="control-label"></label>
+                <input asp-for="ItemName" class="form-control" />
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="IndexItem">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalWarDLA.Models;
 
+
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class FormationController : Controller
@@ -19,14 +20,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Formation
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexFormation()
         {
             var totalWarWanaBeContext = _context.Formations.Include(s => s.IdHorseNavigation).Include(s => s.IdSoldierNavigation);
             return View(await totalWarWanaBeContext.ToListAsync());
         }
 
         // GET: Formation/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> DetailsFormation(int? id)
         {
             if (id == null)
             {
@@ -46,7 +47,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Formation/Create
-        public IActionResult Create()
+        public IActionResult CreateFormation()
         {
             ViewData["IdHorse"] = new SelectList(_context.Horses, "IdHorse", "IdHorse");
             ViewData["IdSoldier"] = new SelectList(_context.SoldierModels, "IdSoldier", "IdSoldier");
@@ -58,7 +59,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdFormation,NumberSoldiers,StartingFormationValue,FormationName,IdSoldier,IdHorse")] Formation Formation)
+        public async Task<IActionResult> CreateFormation([Bind("IdFormation,NumberSoldiers,StartingFormationValue,FormationName,IdSoldier,IdHorse")] Formation Formation)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +73,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Formation/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditFormation(int? id)
         {
             if (id == null)
             {
@@ -94,7 +95,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdFormation,NumberSoldiers,StartingFormationValue,FormationName,IdSoldier,IdHorse")] Formation Formation)
+        public async Task<IActionResult> EditFormation(int id, [Bind("IdFormation,NumberSoldiers,StartingFormationValue,FormationName,IdSoldier,IdHorse")] Formation Formation)
         {
             if (id != Formation.IdFormation)
             {
@@ -127,7 +128,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Formation/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [ActionName("DeleteFormation")]
+        public async Task<IActionResult> DeleteFormation(int? id)
         {
             if (id == null)
             {
@@ -147,7 +149,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // POST: Formation/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteFormation")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

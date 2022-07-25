@@ -19,13 +19,13 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Trait
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexTrait()
         {
             return View(await _context.Traits.ToListAsync());
         }
 
         // GET: Trait/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> DetailsTrait(int? id)
         {
             if (id == null)
             {
@@ -43,7 +43,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Trait/Create
-        public IActionResult Create()
+        public IActionResult CreateTrait()
         {
             return View();
         }
@@ -53,7 +53,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTrait,TraitDescription,TraitName")] Trait trait)
+        public async Task<IActionResult> CreateTrait([Bind("IdTrait,TraitDescription,TraitName")] Trait trait)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Trait/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditTrait(int? id)
         {
             if (id == null)
             {
@@ -85,7 +85,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTrait,TraitDescription,TraitName")] Trait trait)
+        public async Task<IActionResult> EditTrait(int id, [Bind("IdTrait,TraitDescription,TraitName")] Trait trait)
         {
             if (id != trait.IdTrait)
             {
@@ -116,7 +116,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Trait/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteTrait(int? id)
         {
             if (id == null)
             {
@@ -134,7 +134,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // POST: Trait/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteTrait")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

@@ -19,14 +19,16 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse
-        public async Task<IActionResult> Index()
+        [ActionName("IndexHorse")]
+        public async Task<IActionResult> IndexHorse()
         {
             var totalWarWanaBeContext = _context.Horses.Include(h => h.IdBardingNavigation);
             return View(await totalWarWanaBeContext.ToListAsync());
         }
 
         // GET: Horse/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [ActionName("DetailsHorse")]
+        public async Task<IActionResult> DetailsHorse(int? id)
         {
             if (id == null)
             {
@@ -45,7 +47,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse/Create
-        public IActionResult Create()
+        [ActionName("CreateHorse")]
+        public IActionResult CreateHorse()
         {
             ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding");
             return View();
@@ -56,7 +59,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
+        public async Task<IActionResult> CreateHorse([Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +72,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditHorse(int? id)
         {
             if (id == null)
             {
@@ -90,7 +93,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
+        public async Task<IActionResult> EditHorse(int id, [Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
         {
             if (id != horse.IdHorse)
             {
@@ -122,7 +125,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteHorse(int? id)
         {
             if (id == null)
             {
@@ -141,7 +144,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // POST: Horse/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteHorse")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

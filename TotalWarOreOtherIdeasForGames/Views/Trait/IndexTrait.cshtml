@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TotalWarDLA.Models.Trait>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="CreateTrait">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TraitDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TraitName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraitDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraitName)
+            </td>
+            <td>
+                <a asp-action="EditTrait" asp-route-id="@item.IdTrait">Edit</a> |
+                <a asp-action="DetailsTrait" asp-route-id="@item.IdTrait">Details</a> |
+                <a asp-action="DeleteTrait" asp-route-id="@item.IdTrait">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

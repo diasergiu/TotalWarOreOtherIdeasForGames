@@ -18,14 +18,11 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             _context = context;
         }
 
-        // GET: Item
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexItem()
         {
             return View(await _context.Items.ToListAsync());
         }
-
-        // GET: Item/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> DetailsItem(int? id)
         {
             if (id == null)
             {
@@ -41,19 +38,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
             return View(item);
         }
-
-        // GET: Item/Create
-        public IActionResult Create()
+        public IActionResult CreateItem()
         {
             return View();
         }
 
-        // POST: Item/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdItem,StaminaCost,SpeedCost,ItemName")] Item item)
+        public async Task<IActionResult> CreateItem([Bind("IdItem,StaminaCost,SpeedCost,ItemName")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -64,8 +56,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(item);
         }
 
-        // GET: Item/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditItem(int? id)
         {
             if (id == null)
             {
@@ -80,12 +71,11 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(item);
         }
 
-        // POST: Item/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdItem,StaminaCost,SpeedCost,ItemName")] Item item)
+        public async Task<IActionResult> EditItem(int id, [Bind("IdItem,StaminaCost,SpeedCost,ItemName")] Item item)
         {
             if (id != item.IdItem)
             {
@@ -115,8 +105,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(item);
         }
 
-        // GET: Item/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteItem(int? id)
         {
             if (id == null)
             {
@@ -133,8 +122,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(item);
         }
 
-        // POST: Item/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteItem")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

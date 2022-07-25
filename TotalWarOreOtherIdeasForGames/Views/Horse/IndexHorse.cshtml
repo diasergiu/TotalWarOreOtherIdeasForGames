@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TotalWarDLA.Models.Horse>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="CreateHorse">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AttackModifier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BreedName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefenceModifiered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorseStamina)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorseStrength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBardingNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttackModifier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BreedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefenceModifiered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorseStamina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorseStrength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBardingNavigation.IdBarding)
+            </td>
+            <td>
+                <a asp-action="EditHorse" asp-route-id="@item.IdHorse">Edit</a> |
+                <a asp-action="DetailsHorse" asp-route-id="@item.IdHorse">Details</a> |
+                <a asp-action="DeleteHorse" asp-route-id="@item.IdHorse">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

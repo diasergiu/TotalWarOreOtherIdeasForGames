@@ -19,21 +19,21 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         {
             _context = new TotalWarWanaBeContext();
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexFaction()
         {
             return View(await _context.Factions.ToListAsync());
         }
-
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> CreateFaction()
         {
             // nu imi place cum arata parte asta si ar trebui sa ma uit la ce este view models mai mult simt ca nu invat nimic aici doar aplic ce stiu deja
             FactionFormationViewModel factionFormationViewModel = new FactionFormationViewModel();
             factionFormationViewModel.ListFormations = await _context.Formations.ToListAsync();
+            ViewData["formations"] = new SelectList(await _context.Formations.ToListAsync(), "IdFormation", " formationName"); ;
             return View(factionFormationViewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(/*[Bind("FactionName,FactionDescription,ListFormation")]*/[FromForm] FactionFormationViewModel factionFormationViewModel)
+        public async Task<IActionResult> CreateFaction(/*[Bind("FactionName,FactionDescription,ListFormation")]*/[FromForm] FactionFormationViewModel factionFormationViewModel)
         {
             _context.Factions.Add(factionFormationViewModel.faction);
             foreach(Formation formation in factionFormationViewModel.ListFormations)
@@ -42,10 +42,9 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             await _context.SaveChangesAsync();
             // look if this works 
-            return View("Create");
+            return View("CreateFaction");
         }
-
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> DetailsFaction(int? id)
         {
             if(id == null)
             {
@@ -54,8 +53,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(await _context.Factions.FirstOrDefaultAsync(f => f.IdFaction == id));
 
         }
-
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditFaction(int? id)
         {
             if(id == null)
             {
@@ -65,7 +63,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,[Bind("IdFaction,FactionName,FactionDescription")]Faction faction)
+        public async Task<IActionResult> EditFaction(int id,[Bind("IdFaction,FactionName,FactionDescription")]Faction faction)
         {
             if (faction.IdFaction != id) {
                 return NotFound();
@@ -82,12 +80,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                     throw;
                 }
             }
-            return RedirectToAction("Edit");
+            return RedirectToAction("EditFaction");
 
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteFaction(int? id)
         {
             if(id == null)
                 {
@@ -95,7 +93,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
             _context.Factions.Remove(await _context.Factions.FirstOrDefaultAsync(f => f.IdFaction == id));
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexFaction");
         }
     }
 }

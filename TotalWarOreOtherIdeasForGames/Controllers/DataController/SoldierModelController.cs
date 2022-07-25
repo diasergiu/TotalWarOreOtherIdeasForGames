@@ -19,13 +19,13 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: SoldierModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexSoldierModel()
         {
             return View(await _context.SoldierModels.ToListAsync());
         }
 
         // GET: SoldierModels/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> DetailsSoldierModel(int? id)
         {
             if (id == null)
             {
@@ -43,7 +43,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: SoldierModels/Create
-        public IActionResult Create()
+        public IActionResult CreateSoldierModel()
         {
             return View();
         }
@@ -53,7 +53,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdSoldier,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
+        public async Task<IActionResult> CreateSoldierModel([Bind("IdSoldier,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: SoldierModels/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditSoldierModel(int? id)
         {
             if (id == null)
             {
@@ -85,7 +85,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdSoldier,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
+        public async Task<IActionResult> EditSoldierModel(int id, [Bind("IdSoldier,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
         {
             if (id != soldierModel.IdSoldier)
             {
@@ -116,7 +116,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: SoldierModels/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteSoldierModel(int? id)
         {
             if (id == null)
             {
@@ -134,7 +134,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // POST: SoldierModels/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteSoldierModel")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

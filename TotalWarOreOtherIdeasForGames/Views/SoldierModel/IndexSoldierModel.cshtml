@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TotalWarDLA.Models.SoldierModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="CreateSoldierModel">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AttackSkilll)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefenceSkill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stamina)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Speed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Acuracy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoldierName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttackSkilll)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefenceSkill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stamina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Speed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Acuracy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoldierName)
+            </td>
+            <td>
+                <a asp-action="EditSoldierModel" asp-route-id="@item.IdSoldier">Edit</a> |
+                <a asp-action="DetailsSoldierModel" asp-route-id="@item.IdSoldier">Details</a> |
+                <a asp-action="DeleteSoldierModel" asp-route-id="@item.IdSoldier">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

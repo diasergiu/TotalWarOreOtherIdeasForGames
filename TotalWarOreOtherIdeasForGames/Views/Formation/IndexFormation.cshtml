@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TotalWarDLA.Models.Formation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="CreateFormation">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberSoldiers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartingFormationValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdHorseNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSoldierNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberSoldiers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartingFormationValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHorseNavigation.IdHorse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSoldierNavigation.IdSoldier)
+            </td>
+            <td>
+                <a asp-action="EditFormation" asp-route-id="@item.IdFormation">Edit</a> |
+                <a asp-action="DetailsFormation" asp-route-id="@item.IdFormation">Details</a> |
+                <a asp-action="DeleteFormation" asp-route-id="@item.IdFormation">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

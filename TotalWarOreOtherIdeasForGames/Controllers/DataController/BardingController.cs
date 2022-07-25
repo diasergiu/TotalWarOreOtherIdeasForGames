@@ -17,28 +17,26 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         {
             _context = new TotalWarWanaBeContext();
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexBarding()
         {
             return View(await _context.Bardings.ToListAsync());
         }
-
-        public IActionResult Create()
+        public IActionResult CreateBarding()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BardingName,ArmorValue")] Barding barding)
+        public async Task<IActionResult> CreateBarding([Bind("BardingName,ArmorValue")] Barding barding)
         {
             // not looked inte so see how it is created
             _context.Bardings.Add(barding);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Create");
+            return RedirectToAction("CreateBarding");
 
         }
-
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> DetailsBarding(int? id)
         {
             if (id == null)
             {
@@ -51,8 +49,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(barding);
         }
-
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditBarding(int? id)
         {
             if (id == null)
             {
@@ -68,7 +65,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdBarding,BardingName,ArmorValue")] Barding barding)
+        public async Task<IActionResult> EditBarding(int id, [Bind("IdBarding,BardingName,ArmorValue")] Barding barding)
         {
             if (id != barding.IdBarding)
             {
@@ -95,12 +92,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
 
             }
-            return RedirectToAction("Edit");
+            return RedirectToAction("EditBarding");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteBarding(int? id)
         {
             if(id == null)
             {
@@ -108,7 +105,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             _context.Bardings.Remove(await _context.Bardings.FirstOrDefaultAsync(b => b.IdBarding == id));
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexBarding");
         }
     }
 }
