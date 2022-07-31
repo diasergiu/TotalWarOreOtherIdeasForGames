@@ -1,9 +1,11 @@
-﻿@model TotalWarDLA.Models.Trait
+﻿@model TotalWarOreOtherIdeasForGames.ViewModel.TraitViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
-
+<script type="text/javascript" src="~/Views/Style/js/Select.js">
+    MarkCommonElements(@Model.Formations_, "#Formations_");
+</script>
 <h1>Edit</h1>
 
 <h4>Trait</h4>
@@ -12,16 +14,20 @@
     <div class="col-md-4">
         <form asp-action="EditTrait">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdTrait" />
+            <input type="hidden" asp-for="Trait_.IdTrait" />
             <div class="form-group">
-                <label asp-for="TraitDescription" class="control-label"></label>
-                <input asp-for="TraitDescription" class="form-control" />
-                <span asp-validation-for="TraitDescription" class="text-danger"></span>
+                <label asp-for="Trait_.TraitDescription" class="control-label"></label>
+                <input asp-for="Trait_.TraitDescription" class="form-control" />
+                <span asp-validation-for="Trait_.TraitDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TraitName" class="control-label"></label>
-                <input asp-for="TraitName" class="form-control" />
-                <span asp-validation-for="TraitName" class="text-danger"></span>
+                <label asp-for="Trait_.TraitName" class="control-label"></label>
+                <input asp-for="Trait_.TraitName" class="form-control" />
+                <span asp-validation-for="Trait_.TraitName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Formations_" class="control-label"></label>
+            <select asp-for="Formations_" class="form-control" asp-items="ViewBag.IdFormation"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

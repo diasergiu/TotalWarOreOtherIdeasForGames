@@ -1,4 +1,4 @@
-﻿@model TotalWarDLA.Models.Item
+﻿@model TotalWarOreOtherIdeasForGames.ViewModel.ItemViewModel;
 
 @{
     ViewData["Title"] = "Create";
@@ -13,19 +13,23 @@
         <form asp-action="CreateItem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="StaminaCost" class="control-label"></label>
-                <input asp-for="StaminaCost" class="form-control" />
-                <span asp-validation-for="StaminaCost" class="text-danger"></span>
+                <label asp-for="Item_.StaminaCost" class="control-label"></label>
+                <input asp-for="Item_.StaminaCost" class="form-control" />
+                <span asp-validation-for="Item_.StaminaCost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SpeedCost" class="control-label"></label>
-                <input asp-for="SpeedCost" class="form-control" />
-                <span asp-validation-for="SpeedCost" class="text-danger"></span>
+                <label asp-for="Item_.SpeedCost" class="control-label"></label>
+                <input asp-for="Item_.SpeedCost" class="form-control" />
+                <span asp-validation-for="Item_.SpeedCost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ItemName" class="control-label"></label>
-                <input asp-for="ItemName" class="form-control" />
-                <span asp-validation-for="ItemName" class="text-danger"></span>
+                <label asp-for="Item_.ItemName" class="control-label"></label>
+                <input asp-for="Item_.ItemName" class="form-control" />
+                <span asp-validation-for="Item_.ItemName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Formations_" class="control-label"></label>
+                <select asp-for="Formations_" class="control-label" asp-items="ViewBag.IdFormation"></select>               
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

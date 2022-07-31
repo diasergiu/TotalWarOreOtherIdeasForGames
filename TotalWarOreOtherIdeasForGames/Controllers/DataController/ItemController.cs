@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalWarDLA.Models;
+using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
@@ -38,18 +39,23 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
             return View(item);
         }
-        public IActionResult CreateItem()
+        public  IActionResult CreateItem()
         {
+            ViewData["IdFormation"] = new SelectList(_context.Formations, "IdFormation", "FormationName");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateItem([Bind("IdItem,StaminaCost,SpeedCost,ItemName")] Item item)
+        public async Task<IActionResult> CreateItem(/*[Bind("IdItem,StaminaCost,SpeedCost,ItemName")]*/ ItemViewModel item)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(item);
+                _context.Items.Add(item.Item_);
+                foreach(int id in item.Formations_)
+                {
+                    _context.ItemFormations.Add(new ItemFormation(item.Item_,await _context.Formations.FirstOrDefaultAsync(f => f.IdFormation == id)));
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -62,22 +68,31 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-
-            var item = await _context.Items.FindAsync(id);
-            if (item == null)
+            ViewData["IdFormation"] = new SelectList(_context.Formations, "IdFormation", "FormationName");
+            ItemViewModel itemViewModel = new ItemViewModel(await _context.Items.FindAsync(id));
+            if (itemViewModel.Item_ == null)
             {
                 return NotFound();
             }
-            return View(item);
+            // pe bune trebuie sa schimb asta 
+            List<ItemFormation> itemsFormation = _context.ItemFormations.Where(if_ => if_.IdItem == id).ToList();
+            itemViewModel.Formations_ = new int[itemsFormation.Count];
+            int i = 0;
+            foreach(var item in itemsFormation)
+            {
+                itemViewModel.Formations_[i] = item.IdFormation;
+                i++;
+            }
+            return View(itemViewModel);
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditItem(int id, [Bind("IdItem,StaminaCost,SpeedCost,ItemName")] Item item)
+        public async Task<IActionResult> EditItem(int id,ItemViewModel item)
         {
-            if (id != item.IdItem)
+            if (id != item.Item_.IdItem)
             {
                 return NotFound();
             }
@@ -86,12 +101,39 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 try
                 {
-                    _context.Update(item);
+                    _context.Update(item.Item_);
+                    var listItemFormation = _context.ItemFormations.Where(if_ => if_.IdItem == item.Item_.IdItem);
+                    
+                    foreach (var itemFormation in listItemFormation){
+                        bool needsRemove = true;
+                        for(int i  = 0; i < item.Formations_.Length; i++){
+                            if(itemFormation.IdFormation == item.Formations_[i]){
+                                needsRemove = false;
+                                break;
+                            }
+                        }
+                        if (needsRemove){
+                            _context.ItemFormations.Remove(itemFormation);
+                        }
+                    }
+
+                    for(int i = 0; i < item.Formations_.Length; i++){
+                        bool needsAdded = true;
+                        foreach(var itemFormation in listItemFormation){
+                            if(itemFormation.IdFormation == item.Formations_[i]) {
+                                needsAdded = false;
+                            }                            
+                        }
+                        if (needsAdded)
+                        {
+                            _context.ItemFormations.Add(new ItemFormation(item.Item_, _context.Formations.FirstOrDefault(f => f.IdFormation == item.Formations_[i])));
+                        }
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdItem))
+                    if (!ItemExists(item.Item_.IdItem))
                     {
                         return NotFound();
                     }

@@ -19,7 +19,6 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse
-        [ActionName("IndexHorse")]
         public async Task<IActionResult> IndexHorse()
         {
             var totalWarWanaBeContext = _context.Horses.Include(h => h.IdBardingNavigation);
@@ -27,7 +26,6 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse/Details/5
-        [ActionName("DetailsHorse")]
         public async Task<IActionResult> DetailsHorse(int? id)
         {
             if (id == null)
@@ -47,10 +45,9 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse/Create
-        [ActionName("CreateHorse")]
         public IActionResult CreateHorse()
         {
-            ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding");
+            ViewData["Barding"] = new SelectList(_context.Bardings, "IdBarding", "BardingName");
             return View();
         }
 

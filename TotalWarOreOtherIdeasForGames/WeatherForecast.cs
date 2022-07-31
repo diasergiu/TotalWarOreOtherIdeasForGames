@@ -1,6 +1,6 @@
 using System;
 
-namespace TotalWarOreOtherIdeasFOrGames
+namespace TotalWarOreOtherIdeasForGames
 {
     public class WeatherForecast
     {

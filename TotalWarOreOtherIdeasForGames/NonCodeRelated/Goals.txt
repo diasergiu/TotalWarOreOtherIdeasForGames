@@ -7,9 +7,9 @@ You should be abe to assingh traights From Formation
 Filtering : ( soldiersFormation with: factions, horses(if they have one), attack, defance, Stamina) 
 Multiple delete 
 Searching
-At the end of this i will have pagination
+pagination
 encripted password
-Immage incription into database
+Immage Encripted into database
 Log in
 Multiple databases for 1 application
 

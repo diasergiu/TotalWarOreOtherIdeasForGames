@@ -1,9 +1,13 @@
-﻿@model TotalWarDLA.Models.Formation
+﻿@model TotalWarOreOtherIdeasForGames.ViewModel.FormationViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
-
+<script type="text/javascript" src="~/Views/Style/js/Select.js">
+    MarkCommonElements(@Model.Traits_, "#Traits");
+    MarkCommonElements(@Model.Items_, "#Items");
+    MarkCommonElements(@Model.Factions_, "#Factions");
+</script>
 <h1>Edit</h1>
 
 <h4>Formation</h4>
@@ -12,31 +16,43 @@
     <div class="col-md-4">
         <form asp-action="EditFormation">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdFormation" />
+            <input type="hidden" asp-for="Formation_.IdFormation" />
             <div class="form-group">
-                <label asp-for="NumberSoldiers" class="control-label"></label>
-                <input asp-for="NumberSoldiers" class="form-control" />
-                <span asp-validation-for="NumberSoldiers" class="text-danger"></span>
+                <label asp-for="Formation_.NumberSoldiers" class="control-label"></label>
+                <input asp-for="Formation_.NumberSoldiers" class="form-control" />
+                <span asp-validation-for="Formation_.NumberSoldiers" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartingFormationValue" class="control-label"></label>
-                <input asp-for="StartingFormationValue" class="form-control" />
-                <span asp-validation-for="StartingFormationValue" class="text-danger"></span>
+                <label asp-for="Formation_.StartingFormationValue" class="control-label"></label>
+                <input asp-for="Formation_.StartingFormationValue" class="form-control" />
+                <span asp-validation-for="Formation_.StartingFormationValue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FormationName" class="control-label"></label>
-                <input asp-for="FormationName" class="form-control" />
-                <span asp-validation-for="FormationName" class="text-danger"></span>
+                <label asp-for="Formation_.FormationName" class="control-label"></label>
+                <input asp-for="Formation_.FormationName" class="form-control" />
+                <span asp-validation-for="Formation_.FormationName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdSoldier" class="control-label"></label>
-                <select asp-for="IdSoldier" class="form-control" asp-items="ViewBag.IdSoldier"></select>
-                <span asp-validation-for="IdSoldier" class="text-danger"></span>
+                <label asp-for="Formation_.IdSoldier" class="control-label"></label>
+                <select asp-for="Formation_.IdSoldier" class="form-control" asp-items="ViewBag.IdSoldier"></select>
+                <span asp-validation-for="Formation_.IdSoldier" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdHorse" class="control-label"></label>
-                <select asp-for="IdHorse" class="form-control" asp-items="ViewBag.IdHorse"></select>
-                <span asp-validation-for="IdHorse" class="text-danger"></span>
+                <label asp-for="Formation_.IdHorse" class="control-label"></label>
+                <select asp-for="Formation_.IdHorse" class="form-control" asp-items="ViewBag.IdHorse"></select>
+                <span asp-validation-for="Formation_.IdHorse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Traits_" class="control-label"></label>
+                <select asp-for="Traits_" class="form-control" asp-items="ViewBag.IdTrait"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Items_" class="control-label"></label>
+                <select asp-for="Items_" class="form-control" asp-items="ViewBag.IdItem"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factions_" class="control-label"></label>
+                <select asp-for="Factions_" class="form-control" asp-items="ViewBag.IdFaction"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

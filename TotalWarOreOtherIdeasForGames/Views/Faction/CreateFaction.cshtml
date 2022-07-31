@@ -1,9 +1,8 @@
-﻿@model TotalWarDLA.ViewModel.FactionFormationViewModel;
+﻿@model TotalWarOreOtherIdeasForGames.ViewModel.FactionViewModel;
 
 @{
     ViewData["Title"] = "Create";
 }
-
 <h1>Create</h1>
 <h4>Faction</h4>
 
@@ -11,17 +10,19 @@
     <div class="col-md-4">
         <form asp-action="CreateFaction">
             <div class="form-group">
-                <label asp-for="faction.FactionName" class="control-label"></label>
-                <input asp-for="faction.FactionName" class="control-label" />
-                <span asp-validation-for="faction.FactionName"></span>
+                <label asp-for="Faction_.FactionName" class="control-label"></label>
+                <input asp-for="Faction_.FactionName" class="control-label" />
+                <span asp-validation-for="Faction_.FactionName"></span>
             </div>
             <div class="form-group">
-                <label asp-for="faction.FactionDescription" class="control-label"></label>
-                <input asp-for="faction.FactionDescription" class="form-group" />
-                <span asp-validation-for="faction.FactionDescription"></span>
+                <label asp-for="Faction_.FactionDescription" class="control-label"></label>
+                <input asp-for="Faction_.FactionDescription" class="form-group" />
+                <span asp-validation-for="Faction_.FactionDescription"></span>
             </div>
             <div class="form-group">
-                
+                <label asp-for="Formations_" class="control-label"></label>
+                <select asp-for="Formations_" class="control-label" asp-items="ViewBag.IdFormation"></select>
+                @*@Html.ListBoxFor(f => f.Formations_, new SelectList(@Model.ListFormations, "IdFormation", "FormationName"));*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

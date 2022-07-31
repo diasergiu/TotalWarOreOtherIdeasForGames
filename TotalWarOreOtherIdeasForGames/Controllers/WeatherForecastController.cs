@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TotalWarOreOtherIdeasFOrGames.Controllers
+namespace TotalWarOreOtherIdeasForGames.Controllers
 {
     [ApiController]
     [Route("[controller]")]

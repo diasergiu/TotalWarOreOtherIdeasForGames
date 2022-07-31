@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "TotalWarOreOtherIdeasFOrGames": {
+    "TotalWarOreOtherIdeasForGames": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

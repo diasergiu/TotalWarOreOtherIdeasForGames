@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalWarDLA.Models;
+using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
@@ -45,6 +46,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Trait/Create
         public IActionResult CreateTrait()
         {
+            ViewData["Formations_"] = new SelectList(_context.Formations.ToList(), "IdFormation", "FormationName");
             return View();
         }
 
@@ -53,11 +55,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateTrait([Bind("IdTrait,TraitDescription,TraitName")] Trait trait)
+        public async Task<IActionResult> CreateTrait([Bind("IdTrait,TraitDescription,TraitName")] TraitViewModel trait)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(trait);
+                _context.Traits.Add(trait.Trait_);
+                foreach(int i in trait.Formations_){
+                    _context.FormationTraits.Add(new FormationTrait(_context.Formations.FirstOrDefault(f => f.IdFormation == i),trait.Trait_));
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -71,13 +76,22 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-
-            var trait = await _context.Traits.FindAsync(id);
-            if (trait == null)
+            TraitViewModel tvm = new TraitViewModel();
+            tvm.Trait_ = await _context.Traits.FindAsync(id);
+            if (tvm.Trait_ == null)
             {
                 return NotFound();
             }
-            return View(trait);
+            var listFormation = _context.FormationTraits.Where(f => f.IdTrait == id).ToList();
+            // this needs to be removed
+            tvm.Formations_ = new int[listFormation.Count];
+            int i = 0;
+            foreach(var forma in listFormation){
+                tvm.Formations_[i] = forma.IdFormation;
+                i++;
+            }
+            ViewData["IdFormation"] = new SelectList(_context.Formations, "IdFormation", "FormationName");
+            return View(tvm);
         }
 
         // POST: Trait/Edit/5
@@ -85,9 +99,9 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditTrait(int id, [Bind("IdTrait,TraitDescription,TraitName")] Trait trait)
+        public async Task<IActionResult> EditTrait(int id, TraitViewModel traitViewModel)
         {
-            if (id != trait.IdTrait)
+            if (id != traitViewModel.Trait_.IdTrait)
             {
                 return NotFound();
             }
@@ -96,12 +110,47 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 try
                 {
-                    _context.Update(trait);
+                    _context.Traits.Update(traitViewModel.Trait_);
+                    var oldListFactionFormation = _context.FormationTraits.Where(ft => ft.IdTrait == traitViewModel.Trait_.IdTrait).ToList();
+                    foreach (int newId in traitViewModel.Formations_)
+                    {
+                        bool isNew = true;
+
+                        foreach (FormationTrait ft in oldListFactionFormation)
+                        {
+                            if (ft.IdFormation == newId)
+                            {
+                                isNew = false;
+                                break;
+                            }
+                        }
+                        if (isNew)
+                        {
+                            /*After loading from the database in view and lodin again in oldList we search the database again*/
+                            _context.FormationTraits.Add(new FormationTrait(_context.Formations.FirstOrDefault(form => form.IdFormation == newId), traitViewModel.Trait_));
+                        }
+                    }
+
+                    foreach (FormationTrait ft in oldListFactionFormation)
+                    {
+                        bool needRemove = true;
+                        foreach (int newId in traitViewModel.Formations_)
+                        {
+                            if (ft.IdFormation == newId)
+                            {
+                                needRemove = false;
+                            }
+                        }
+                        if (needRemove)
+                        {
+                            _context.FormationTraits.Remove(ft);
+                        }
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TraitExists(trait.IdTrait))
+                    if (!TraitExists(traitViewModel.Trait_.IdTrait))
                     {
                         return NotFound();
                     }
@@ -112,7 +161,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(trait);
+            return View(traitViewModel);
         }
 
         // GET: Trait/Delete/5

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using TotalWarDLA.Models;
 using System.IO;
 
-namespace TotalWarOreOtherIdeasFOrGames
+namespace TotalWarOreOtherIdeasForGames
 {
     public class Startup
     {

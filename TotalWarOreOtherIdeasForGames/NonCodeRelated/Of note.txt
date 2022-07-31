@@ -1,1 +1,10 @@
 ﻿i dont know what roling back the entityFrameworkCore did to the fuunctionality of the curent models functionality
+
+
+To Unit test
+
+the basic CRUD function
+Edit when you add new table relationship
+Edit when you take away a relation
+Edit wehn you take 1 and you add 1 relationship
+Create when you add a relationship

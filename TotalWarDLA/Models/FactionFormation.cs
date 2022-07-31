@@ -8,8 +8,8 @@ namespace TotalWarDLA.Models
     public partial class FactionFormation
     {
 
-        //InvalidOperationException: No suitable constructor was found for entity type 'FactionFormation'. The following constructors had parameters that could not be bound to properties of the entity type: cannot bind 'faction', 'formation' in 'FactionFormation(Faction faction, Formation formation
-       // so apperantly it needs normal construction in the faction controller 
+        //InvalidOperationException: No suitable constructor was found for entity type 'FactionFormation'. The following constructors had parameters that could not be bound to properties of the entity type: cannot bind 'Faction_', 'formation' in 'FactionFormation(Faction Faction_, Formation formation
+       // so apperantly it needs normal construction in the Faction_ controller 
         public FactionFormation()
         {
 
@@ -18,10 +18,10 @@ namespace TotalWarDLA.Models
         // in order to save do i need to just the int ID's ore do i need the object ass well
         public FactionFormation(Faction faction, Formation formation)
         {
-            IdFaction = faction.IdFaction;
-            IdFormation = formation.IdFormation;
-            IdFormationNavigation = formation;
-            IdFactionNavigation = faction;
+            this.IdFaction = faction.IdFaction;
+            this.IdFormation = formation.IdFormation;
+            this.IdFormationNavigation = formation;
+            this.IdFactionNavigation = faction;
         }
         public int IdFaction { get; set; }
         public int IdFormation { get; set; }
