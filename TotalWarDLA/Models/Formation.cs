@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using TotalWarDLA.Models.NonDataModels;
 
 #nullable disable
 
 namespace TotalWarDLA.Models
 {
-    public partial class Formation
+    public partial class Formation : IModel_
     {
         public Formation()
         {
@@ -13,8 +15,8 @@ namespace TotalWarDLA.Models
             ItemFormations = new HashSet<ItemFormation>();
             FormationTraits = new HashSet<FormationTrait>();
         }
-
-        public int IdFormation { get; set; }
+        [Column("IdFormation")]
+        public int Id { get; set; }
         public int NumberSoldiers { get; set; }
         public int StartingFormationValue { get; set; }
         public string FormationName { get; set; }

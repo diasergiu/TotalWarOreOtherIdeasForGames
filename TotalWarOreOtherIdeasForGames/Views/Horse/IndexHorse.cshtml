@@ -52,12 +52,12 @@
                 @Html.DisplayFor(modelItem => item.HorseStrength)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdBardingNavigation.IdBarding)
+                @Html.DisplayFor(modelItem => item.IdBardingNavigation.Id)
             </td>
             <td>
-                <a asp-action="EditHorse" asp-route-id="@item.IdHorse">Edit</a> |
-                <a asp-action="DetailsHorse" asp-route-id="@item.IdHorse">Details</a> |
-                <a asp-action="DeleteHorse" asp-route-id="@item.IdHorse">Delete</a>
+                <a asp-action="EditHorse" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DetailsHorse" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="DeleteHorse" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

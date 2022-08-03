@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.SoldierName)
             </td>
             <td>
-                <a asp-action="EditSoldierModel" asp-route-id="@item.IdSoldier">Edit</a> |
-                <a asp-action="DetailsSoldierModel" asp-route-id="@item.IdSoldier">Details</a> |
-                <a asp-action="DeleteSoldierModel" asp-route-id="@item.IdSoldier">Delete</a>
+                <a asp-action="EditSoldierModel" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DetailsSoldierModel" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="DeleteSoldierModel" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

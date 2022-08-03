@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using TotalWarDLA.Models.NonDataModels;
 
 #nullable disable
 
 namespace TotalWarDLA.Models
 {
-    public partial class Horse
+    public partial class Horse :IModel_
     {
         public Horse()
         {
             Formations = new HashSet<Formation>();
         }
-
-        public int IdHorse { get; set; }
+        [Column("IdHorse")]
+        public int Id { get; set; }
         public int AttackModifier { get; set; }
         public string BreedName { get; set; }
         public int DefenceModifiered { get; set; }

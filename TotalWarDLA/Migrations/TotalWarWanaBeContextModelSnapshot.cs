@@ -41,7 +41,7 @@ namespace TotalWarDLA.Migrations
 
             modelBuilder.Entity("TotalWarDLA.Models.Faction", b =>
                 {
-                    b.Property<int>("IdFaction")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -54,29 +54,29 @@ namespace TotalWarDLA.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("IdFaction");
+                    b.HasKey("Id");
 
                     b.ToTable("Factions");
                 });
 
             modelBuilder.Entity("TotalWarDLA.Models.FactionFormation", b =>
                 {
-                    b.Property<int>("IdFaction")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdFormation")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.HasKey("IdFaction", "IdFormation");
+                    b.HasKey("Id", "Id");
 
-                    b.HasIndex(new[] { "IdFormation" }, "IX_FactionFormation_FormationsIdFormation");
+                    b.HasIndex(new[] { "Id" }, "IX_FactionFormation_FormationsIdFormation");
 
                     b.ToTable("FactionFormation");
                 });
 
             modelBuilder.Entity("TotalWarDLA.Models.Formation", b =>
                 {
-                    b.Property<int>("IdFormation")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -85,10 +85,10 @@ namespace TotalWarDLA.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("IdHorse")
+                    b.Property<int?>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdSoldier")
+                    b.Property<int?>("Id")
                         .HasColumnType("int");
 
                     b.Property<int>("NumberSoldiers")
@@ -97,33 +97,33 @@ namespace TotalWarDLA.Migrations
                     b.Property<int>("StartingFormationValue")
                         .HasColumnType("int");
 
-                    b.HasKey("IdFormation");
+                    b.HasKey("Id");
 
-                    b.HasIndex(new[] { "IdHorse" }, "IX_Formations_IdHorse");
+                    b.HasIndex(new[] { "Id" }, "IX_Formations_IdHorse");
 
-                    b.HasIndex(new[] { "IdSoldier" }, "IX_Formations_IdSoldier");
+                    b.HasIndex(new[] { "Id" }, "IX_Formations_IdSoldier");
 
                     b.ToTable("Formations");
                 });
 
             modelBuilder.Entity("TotalWarDLA.Models.FormationTrait", b =>
                 {
-                    b.Property<int>("IdFormation")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTrait")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.HasKey("IdFormation", "IdTrait");
+                    b.HasKey("Id", "Id");
 
-                    b.HasIndex(new[] { "IdTrait" }, "IX_FormationTrait_TraitsIdTrait");
+                    b.HasIndex(new[] { "Id" }, "IX_FormationTrait_TraitsIdTrait");
 
                     b.ToTable("FormationTrait");
                 });
 
             modelBuilder.Entity("TotalWarDLA.Models.Horse", b =>
                 {
-                    b.Property<int>("IdHorse")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -147,7 +147,7 @@ namespace TotalWarDLA.Migrations
                     b.Property<int?>("IdBarding")
                         .HasColumnType("int");
 
-                    b.HasKey("IdHorse");
+                    b.HasKey("Id");
 
                     b.HasIndex(new[] { "IdBarding" }, "IX_Horses_IdBarding");
 
@@ -156,7 +156,7 @@ namespace TotalWarDLA.Migrations
 
             modelBuilder.Entity("TotalWarDLA.Models.Item", b =>
                 {
-                    b.Property<int>("IdItem")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -171,29 +171,29 @@ namespace TotalWarDLA.Migrations
                     b.Property<int>("StaminaCost")
                         .HasColumnType("int");
 
-                    b.HasKey("IdItem");
+                    b.HasKey("Id");
 
                     b.ToTable("Items");
                 });
 
             modelBuilder.Entity("TotalWarDLA.Models.ItemFormation", b =>
                 {
-                    b.Property<int>("IdItem")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdFormation")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.HasKey("IdItem", "IdFormation");
+                    b.HasKey("Id", "Id");
 
-                    b.HasIndex(new[] { "IdFormation" }, "IX_ItemFormation_FormationsIdFormation");
+                    b.HasIndex(new[] { "Id" }, "IX_ItemFormation_FormationsIdFormation");
 
                     b.ToTable("ItemFormation");
                 });
 
             modelBuilder.Entity("TotalWarDLA.Models.SoldierModel", b =>
                 {
-                    b.Property<int>("IdSoldier")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -217,14 +217,14 @@ namespace TotalWarDLA.Migrations
                     b.Property<int>("Stamina")
                         .HasColumnType("int");
 
-                    b.HasKey("IdSoldier");
+                    b.HasKey("Id");
 
                     b.ToTable("SoldierModels");
                 });
 
             modelBuilder.Entity("TotalWarDLA.Models.Trait", b =>
                 {
-                    b.Property<int>("IdTrait")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -237,7 +237,7 @@ namespace TotalWarDLA.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("IdTrait");
+                    b.HasKey("Id");
 
                     b.ToTable("Traits");
                 });
@@ -246,13 +246,13 @@ namespace TotalWarDLA.Migrations
                 {
                     b.HasOne("TotalWarDLA.Models.Faction", "IdFactionNavigation")
                         .WithMany("FactionFormations")
-                        .HasForeignKey("IdFaction")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TotalWarDLA.Models.Formation", "IdFormationNavigation")
                         .WithMany("FactionFormations")
-                        .HasForeignKey("IdFormation")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -265,12 +265,12 @@ namespace TotalWarDLA.Migrations
                 {
                     b.HasOne("TotalWarDLA.Models.Horse", "IdHorseNavigation")
                         .WithMany("Formations")
-                        .HasForeignKey("IdHorse")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("TotalWarDLA.Models.SoldierModel", "IdSoldierNavigation")
                         .WithMany("Formations")
-                        .HasForeignKey("IdSoldier")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("IdHorseNavigation");
@@ -282,13 +282,13 @@ namespace TotalWarDLA.Migrations
                 {
                     b.HasOne("TotalWarDLA.Models.Formation", "IdFormationNavigation")
                         .WithMany("FormationTraits")
-                        .HasForeignKey("IdFormation")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TotalWarDLA.Models.Trait", "IdTraitNavigation")
                         .WithMany("FormationTraits")
-                        .HasForeignKey("IdTrait")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -311,13 +311,13 @@ namespace TotalWarDLA.Migrations
                 {
                     b.HasOne("TotalWarDLA.Models.Formation", "IdFormationNavigation")
                         .WithMany("ItemFormations")
-                        .HasForeignKey("IdFormation")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TotalWarDLA.Models.Item", "IdItemNavigation")
                         .WithMany("ItemFormations")
-                        .HasForeignKey("IdItem")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

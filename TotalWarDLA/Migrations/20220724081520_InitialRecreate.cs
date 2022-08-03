@@ -124,13 +124,13 @@ namespace TotalWarDLA.Migrations
                         name: "FK_Formations_Horses_IdHorse",
                         column: x => x.IdHorse,
                         principalTable: "Horses",
-                        principalColumn: "IdHorse",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Formations_SoldierModels_IdSoldier",
                         column: x => x.IdSoldier,
                         principalTable: "SoldierModels",
-                        principalColumn: "IdSoldier",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -148,13 +148,13 @@ namespace TotalWarDLA.Migrations
                         name: "FK_FactionFormation_Factions_IdFaction",
                         column: x => x.IdFaction,
                         principalTable: "Factions",
-                        principalColumn: "IdFaction",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FactionFormation_Formations_IdFormation",
                         column: x => x.IdFormation,
                         principalTable: "Formations",
-                        principalColumn: "IdFormation",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -172,13 +172,13 @@ namespace TotalWarDLA.Migrations
                         name: "FK_FormationTrait_Formations_IdFormation",
                         column: x => x.IdFormation,
                         principalTable: "Formations",
-                        principalColumn: "IdFormation",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FormationTrait_Traits_IdTrait",
                         column: x => x.IdTrait,
                         principalTable: "Traits",
-                        principalColumn: "IdTrait",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -196,35 +196,35 @@ namespace TotalWarDLA.Migrations
                         name: "FK_ItemFormation_Formations_IdFormation",
                         column: x => x.IdFormation,
                         principalTable: "Formations",
-                        principalColumn: "IdFormation",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ItemFormation_Items_IdItem",
                         column: x => x.IdItem,
                         principalTable: "Items",
-                        principalColumn: "IdItem",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_FactionFormation_FormationsIdFormation",
                 table: "FactionFormation",
-                column: "IdFormation");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Formations_IdHorse",
                 table: "Formations",
-                column: "IdHorse");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Formations_IdSoldier",
                 table: "Formations",
-                column: "IdSoldier");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FormationTrait_TraitsIdTrait",
                 table: "FormationTrait",
-                column: "IdTrait");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Horses_IdBarding",
@@ -234,7 +234,7 @@ namespace TotalWarDLA.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ItemFormation_FormationsIdFormation",
                 table: "ItemFormation",
-                column: "IdFormation");
+                column: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

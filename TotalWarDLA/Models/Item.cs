@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using TotalWarDLA.Models.NonDataModels;
 
 #nullable disable
 
 namespace TotalWarDLA.Models
 {
-    public partial class Item
+    public partial class Item :IModel_
     {
         public Item()
         {
             ItemFormations = new HashSet<ItemFormation>();
         }
-
-        public int IdItem { get; set; }
+        [Column("IdItem")]
+        public int Id { get; set; }
         public int StaminaCost { get; set; }
         public int SpeedCost { get; set; }
         public string ItemName { get; set; }

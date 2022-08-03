@@ -28,9 +28,9 @@
                         @Html.DisplayFor(modelItem => item.ArmorValue)
                     </td>
                     <td>
-                        <a asp-action="EditBarding" asp-route-id="@item.IdBarding">Edit</a>
-                        <a asp-action="DetailsBarding" asp-route-id="@item.IdBarding">Details</a>   
-                        <form asp-action="DeleteBarding" asp-route-id="@item.IdBarding" method="post">
+                        <a asp-action="EditBarding" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="DetailsBarding" asp-route-id="@item.Id">Details</a>   
+                        <form asp-action="DeleteBarding" asp-route-id="@item.Id" method="post">
                             <div class="form-group">
                                 <input type="submit" value="Delete" class="btn btn-primary" />
                             </div>

@@ -31,7 +31,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
 
             var item = await _context.Items
-                .FirstOrDefaultAsync(m => m.IdItem == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
                 return NotFound();
@@ -41,20 +41,20 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public  IActionResult CreateItem()
         {
-            ViewData["IdFormation"] = new SelectList(_context.Formations, "IdFormation", "FormationName");
+            ViewData["Formations"] = new SelectList(_context.Formations, "Id", "FormationName");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateItem(/*[Bind("IdItem,StaminaCost,SpeedCost,ItemName")]*/ ItemViewModel item)
+        public async Task<IActionResult> CreateItem(/*[Bind("Id,StaminaCost,SpeedCost,ItemName")]*/ ItemViewModel item)
         {
             if (ModelState.IsValid)
             {
                 _context.Items.Add(item.Item_);
                 foreach(int id in item.Formations_)
                 {
-                    _context.ItemFormations.Add(new ItemFormation(item.Item_,await _context.Formations.FirstOrDefaultAsync(f => f.IdFormation == id)));
+                    _context.ItemFormations.Add(new ItemFormation(item.Item_,await _context.Formations.FirstOrDefaultAsync(f => f.Id == id)));
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -68,7 +68,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            ViewData["IdFormation"] = new SelectList(_context.Formations, "IdFormation", "FormationName");
+            ViewData["Formations"] = new SelectList(_context.Formations, "Id", "FormationName");
             ItemViewModel itemViewModel = new ItemViewModel(await _context.Items.FindAsync(id));
             if (itemViewModel.Item_ == null)
             {
@@ -92,7 +92,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditItem(int id,ItemViewModel item)
         {
-            if (id != item.Item_.IdItem)
+            if (id != item.Item_.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 try
                 {
                     _context.Update(item.Item_);
-                    var listItemFormation = _context.ItemFormations.Where(if_ => if_.IdItem == item.Item_.IdItem);
+                    var listItemFormation = _context.ItemFormations.Where(if_ => if_.IdItem == item.Item_.Id);
                     
                     foreach (var itemFormation in listItemFormation){
                         bool needsRemove = true;
@@ -126,14 +126,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         }
                         if (needsAdded)
                         {
-                            _context.ItemFormations.Add(new ItemFormation(item.Item_, _context.Formations.FirstOrDefault(f => f.IdFormation == item.Formations_[i])));
+                            _context.ItemFormations.Add(new ItemFormation(item.Item_, _context.Formations.FirstOrDefault(f => f.Id == item.Formations_[i])));
                         }
                     }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.Item_.IdItem))
+                    if (!ItemExists(item.Item_.Id))
                     {
                         return NotFound();
                     }
@@ -155,7 +155,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
 
             var item = await _context.Items
-                .FirstOrDefaultAsync(m => m.IdItem == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
                 return NotFound();
@@ -176,7 +176,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
         private bool ItemExists(int id)
         {
-            return _context.Items.Any(e => e.IdItem == id);
+            return _context.Items.Any(e => e.Id == id);
         }
     }
 }

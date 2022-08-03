@@ -43,15 +43,15 @@
                 @Html.DisplayFor(modelItem => item.FormationName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdHorseNavigation.IdHorse)
+                @Html.DisplayFor(modelItem => item.IdHorseNavigation.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdSoldierNavigation.IdSoldier)
+                @Html.DisplayFor(modelItem => item.IdSoldierNavigation.Id)
             </td>
             <td>
-                <a asp-action="EditFormation" asp-route-id="@item.IdFormation">Edit</a> |
-                <a asp-action="DetailsFormation" asp-route-id="@item.IdFormation">Details</a> |
-                <a asp-action="DeleteFormation" asp-route-id="@item.IdFormation">Delete</a>
+                <a asp-action="EditFormation" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DetailsFormation" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="DeleteFormation" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

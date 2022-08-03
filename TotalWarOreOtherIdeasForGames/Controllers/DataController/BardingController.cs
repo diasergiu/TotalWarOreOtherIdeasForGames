@@ -42,7 +42,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            var barding = await _context.Bardings.FirstOrDefaultAsync(b => b.IdBarding == id);
+            var barding = await _context.Bardings.FirstOrDefaultAsync(b => b.Id == id);
             if (barding == null)
             {
                 return NotFound();
@@ -55,7 +55,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            var barding = await _context.Bardings.FirstOrDefaultAsync(b => b.IdBarding == id);
+            var barding = await _context.Bardings.FirstOrDefaultAsync(b => b.Id == id);
             if (barding == null)
             {
                 return NotFound();
@@ -65,9 +65,9 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditBarding(int id, [Bind("IdBarding,BardingName,ArmorValue")] Barding barding)
+        public async Task<IActionResult> EditBarding(int id, [Bind("Id,BardingName,ArmorValue")] Barding barding)
         {
-            if (id != barding.IdBarding)
+            if (id != barding.Id)
             {
                 return NotFound();
             }
@@ -103,7 +103,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            _context.Bardings.Remove(await _context.Bardings.FirstOrDefaultAsync(b => b.IdBarding == id));
+            _context.Bardings.Remove(await _context.Bardings.FirstOrDefaultAsync(b => b.Id == id));
             await _context.SaveChangesAsync();
             return RedirectToAction("IndexBarding");
         }

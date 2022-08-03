@@ -35,7 +35,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
             var horse = await _context.Horses
                 .Include(h => h.IdBardingNavigation)
-                .FirstOrDefaultAsync(m => m.IdHorse == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (horse == null)
             {
                 return NotFound();
@@ -47,7 +47,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Horse/Create
         public IActionResult CreateHorse()
         {
-            ViewData["Barding"] = new SelectList(_context.Bardings, "IdBarding", "BardingName");
+            ViewData["Bardings"] = new SelectList(_context.Bardings, "Id", "BardingName");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateHorse([Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
+        public async Task<IActionResult> CreateHorse([Bind("Id,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.IdBarding);
+            ViewData["Bardings"] = new SelectList(_context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
 
@@ -81,7 +81,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.IdBarding);
+            ViewData["Bardings"] = new SelectList(_context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
 
@@ -90,9 +90,9 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditHorse(int id, [Bind("IdHorse,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
+        public async Task<IActionResult> EditHorse(int id, [Bind("Id,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
         {
-            if (id != horse.IdHorse)
+            if (id != horse.Id)
             {
                 return NotFound();
             }
@@ -106,7 +106,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HorseExists(horse.IdHorse))
+                    if (!HorseExists(horse.Id))
                     {
                         return NotFound();
                     }
@@ -117,7 +117,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdBarding"] = new SelectList(_context.Bardings, "IdBarding", "IdBarding", horse.IdBarding);
+            ViewData["Bardings"] = new SelectList(_context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
 
@@ -131,7 +131,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
             var horse = await _context.Horses
                 .Include(h => h.IdBardingNavigation)
-                .FirstOrDefaultAsync(m => m.IdHorse == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (horse == null)
             {
                 return NotFound();
@@ -153,7 +153,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
         private bool HorseExists(int id)
         {
-            return _context.Horses.Any(e => e.IdHorse == id);
+            return _context.Horses.Any(e => e.Id == id);
         }
     }
 }

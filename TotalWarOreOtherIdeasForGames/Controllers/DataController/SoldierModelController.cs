@@ -33,7 +33,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
 
             var soldierModel = await _context.SoldierModels
-                .FirstOrDefaultAsync(m => m.IdSoldier == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (soldierModel == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSoldierModel([Bind("IdSoldier,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
+        public async Task<IActionResult> CreateSoldierModel([Bind("Id,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
         {
             if (ModelState.IsValid)
             {
@@ -85,9 +85,9 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditSoldierModel(int id, [Bind("IdSoldier,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
+        public async Task<IActionResult> EditSoldierModel(int id, [Bind("Id,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
         {
-            if (id != soldierModel.IdSoldier)
+            if (id != soldierModel.Id)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SoldierModelExists(soldierModel.IdSoldier))
+                    if (!SoldierModelExists(soldierModel.Id))
                     {
                         return NotFound();
                     }
@@ -124,7 +124,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
 
             var soldierModel = await _context.SoldierModels
-                .FirstOrDefaultAsync(m => m.IdSoldier == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (soldierModel == null)
             {
                 return NotFound();
@@ -146,7 +146,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
         private bool SoldierModelExists(int id)
         {
-            return _context.SoldierModels.Any(e => e.IdSoldier == id);
+            return _context.SoldierModels.Any(e => e.Id == id);
         }
     }
 }

@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="EditHorse">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdHorse" />
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="AttackModifier" class="control-label"></label>
                 <input asp-for="AttackModifier" class="form-control" />
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdBarding" class="control-label"></label>
-                <select asp-for="IdBarding" class="form-control" asp-items="ViewBag.IdBarding"></select>
+                <select asp-for="IdBarding" class="form-control" asp-items="ViewBag.Bardings"></select>
                 <span asp-validation-for="IdBarding" class="text-danger"></span>
             </div>
             <div class="form-group">

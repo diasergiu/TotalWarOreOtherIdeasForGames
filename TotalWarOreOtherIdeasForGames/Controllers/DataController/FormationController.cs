@@ -40,7 +40,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             var Formation = await _context.Formations
                 .Include(s => s.IdHorseNavigation)
                 .Include(s => s.IdSoldierNavigation)
-                .FirstOrDefaultAsync(m => m.IdFormation == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (Formation == null)
             {
                 return NotFound();
@@ -52,11 +52,11 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Formation/Create
         public IActionResult CreateFormation()
         {
-            ViewData["IdHorse"] = new SelectList(_context.Horses, "IdHorse", "BreedName");
-            ViewData["IdSoldier"] = new SelectList(_context.SoldierModels, "IdSoldier", "SoldierName");
-            ViewData["IdTrait"] = new SelectList(_context.Traits, "IdTrait", "TraitName");
-            ViewData["IdItem"] = new SelectList(_context.Items, "IdItem", "ItemName"); ;
-            ViewData["IdFaction"] = new SelectList(_context.Factions, "IdFaction", "FactionName");
+            ViewData["Horses"] = new SelectList(_context.Horses, "Id", "BreedName");
+            ViewData["Soldiers"] = new SelectList(_context.SoldierModels, "Id", "SoldierName");
+            ViewData["Traits"] = new SelectList(_context.Traits, "Id", "TraitName");
+            ViewData["Items"] = new SelectList(_context.Items, "Id", "ItemName"); ;
+            ViewData["Factions"] = new SelectList(_context.Factions, "Id", "FactionName");
             return View();
         }
 
@@ -74,24 +74,24 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 
                 for (int i = 0; i < formation.Traits_.Length; i++)
                 {
-                    _context.FormationTraits.Add(new FormationTrait(formation.Formation_, await _context.Traits.FirstOrDefaultAsync(q => q.IdTrait == formation.Traits_[i])));
+                    _context.FormationTraits.Add(new FormationTrait(formation.Formation_, await _context.Traits.FirstOrDefaultAsync(q => q.Id == formation.Traits_[i])));
                 }
                 for (int i = 0; i < formation.Factions_.Length; i++)
                 {
-                    _context.FactionFormations.Add(new FactionFormation(await _context.Factions.FirstOrDefaultAsync(q => q.IdFaction == formation.Factions_[i]), formation.Formation_));
+                    _context.FactionFormations.Add(new FactionFormation(await _context.Factions.FirstOrDefaultAsync(q => q.Id == formation.Factions_[i]), formation.Formation_));
                 }
                 for (int i = 0; i < formation.Items_.Length; i++)
                 {
-                    _context.ItemFormations.Add(new ItemFormation(await _context.Items.FirstOrDefaultAsync(q => q.IdItem == formation.Items_[i]), formation.Formation_));
+                    _context.ItemFormations.Add(new ItemFormation(await _context.Items.FirstOrDefaultAsync(q => q.Id == formation.Items_[i]), formation.Formation_));
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdHorse"] = new SelectList(_context.Horses, "IdHorse", "IdHorse", formation.Formation_.IdHorse);
-            ViewData["IdSoldier"] = new SelectList(_context.SoldierModels, "IdSoldier", "IdSoldier", formation.Formation_.IdSoldier);
-            ViewData["IdTrait"] = new SelectList(_context.Traits, "IdTrait", "TraitName");
-            ViewData["IdItem"] = new SelectList(_context.Items, "IdItem", "ItemName"); ;
-            ViewData["IdFaction"] = new SelectList(_context.Factions, "IdFaction", "FactionName");
+            ViewData["horses"] = new SelectList(_context.Horses, "Id", "Id", formation.Formation_.IdHorse);
+            ViewData["Soldiers"] = new SelectList(_context.SoldierModels, "Id", "Id", formation.Formation_.IdSoldier);
+            ViewData["Traits"] = new SelectList(_context.Traits, "Id", "TraitName");
+            ViewData["Items"] = new SelectList(_context.Items, "Id", "ItemName"); ;
+            ViewData["Factions"] = new SelectList(_context.Factions, "Id", "FactionName");
             return View(formation);
         }
 
@@ -132,11 +132,11 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            ViewData["IdHorse"] = new SelectList(_context.Horses, "IdHorse", "IdHorse", formationViewModel.Formation_.IdHorse);
-            ViewData["IdSoldier"] = new SelectList(_context.SoldierModels, "IdSoldier", "IdSoldier", formationViewModel.Formation_.IdSoldier);
-            ViewData["IdTrait"] = new SelectList(_context.Traits, "IdTrait", "TraitName");
-            ViewData["IdItem"] = new SelectList(_context.Items, "IdItem", "ItemName"); ;
-            ViewData["IdFaction"] = new SelectList(_context.Factions, "IdFaction", "FactionName");
+            ViewData["horses"] = new SelectList(_context.Horses, "Id", "Id", formationViewModel.Formation_.IdHorse);
+            ViewData["Soldiers"] = new SelectList(_context.SoldierModels, "Id", "Id", formationViewModel.Formation_.IdSoldier);
+            ViewData["Traits"] = new SelectList(_context.Traits, "Id", "TraitName");
+            ViewData["Items"] = new SelectList(_context.Items, "Id", "ItemName"); ;
+            ViewData["Factions"] = new SelectList(_context.Factions, "Id", "FactionName");
             return View(formationViewModel);
         }
 
@@ -147,7 +147,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditFormation(int id,  FormationViewModel formationViewModel)
         {
-            if (id != formationViewModel.Formation_.IdFormation)
+            if (id != formationViewModel.Formation_.Id)
             {
                 return NotFound();
             }
@@ -158,7 +158,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 {
                     _context.Update(formationViewModel.Formation_); 
                     // Slap stick this function with ctrl + v
-                    var oldListItemFormation = _context.ItemFormations.Where(ff => ff.IdFormation == formationViewModel.Formation_.IdFormation).ToList();
+                    var oldListItemFormation = _context.ItemFormations.Where(ff => ff.IdFormation == formationViewModel.Formation_.Id).ToList();
                     foreach (int newId in formationViewModel.Items_)
                     {
                         bool isNew = true;
@@ -173,7 +173,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         }
                         if (isNew)
                         {
-                            _context.ItemFormations.Add(new ItemFormation(_context.Items.FirstOrDefault(itm => itm.IdItem == newId), formationViewModel.Formation_));
+                            _context.ItemFormations.Add(new ItemFormation(_context.Items.FirstOrDefault(itm => itm.Id == newId), formationViewModel.Formation_));
                         }
                     }
 
@@ -194,7 +194,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         }
                     }
 
-                    var oldListTraitFormation = _context.FormationTraits.Where(ff => ff.IdFormation == formationViewModel.Formation_.IdFormation).ToList();
+                    var oldListTraitFormation = _context.FormationTraits.Where(ff => ff.IdFormation == formationViewModel.Formation_.Id).ToList();
                     foreach (int newId in formationViewModel.Traits_)
                     {
                         bool isNew = true;
@@ -209,7 +209,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         }
                         if (isNew)
                         {
-                            _context.FormationTraits.Add(new FormationTrait(formationViewModel.Formation_, _context.Traits.FirstOrDefault(itm => itm.IdTrait == newId)));
+                            _context.FormationTraits.Add(new FormationTrait(formationViewModel.Formation_, _context.Traits.FirstOrDefault(itm => itm.Id == newId)));
                         }
                     }
 
@@ -230,7 +230,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         }
                     }
 
-                    var oldListFactionFormation = _context.FactionFormations.Where(ff => ff.IdFormation == formationViewModel.Formation_.IdFormation).ToList();
+                    var oldListFactionFormation = _context.FactionFormations.Where(ff => ff.IdFormation == formationViewModel.Formation_.Id).ToList();
                     foreach (int newId in formationViewModel.Factions_)
                     {
                         bool isNew = true;
@@ -245,7 +245,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         }
                         if (isNew)
                         {
-                            _context.FactionFormations.Add(new FactionFormation(_context.Factions.FirstOrDefault(itm => itm.IdFaction == newId), formationViewModel.Formation_));
+                            _context.FactionFormations.Add(new FactionFormation(_context.Factions.FirstOrDefault(itm => itm.Id == newId), formationViewModel.Formation_));
                         }
                     }
 
@@ -270,7 +270,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FormationExists(formationViewModel.Formation_.IdFormation))
+                    if (!FormationExists(formationViewModel.Formation_.Id))
                     {
                         return NotFound();
                     }
@@ -281,8 +281,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdHorse"] = new SelectList(_context.Horses, "IdHorse", "IdHorse", formationViewModel.Formation_.IdHorse);
-            ViewData["IdSoldier"] = new SelectList(_context.SoldierModels, "IdSoldier", "IdSoldier", formationViewModel.Formation_.IdSoldier);
+            ViewData["Horses"] = new SelectList(_context.Horses, "Id", "Id", formationViewModel.Formation_.IdHorse);
+            ViewData["Soldiers"] = new SelectList(_context.SoldierModels, "Id", "Id", formationViewModel.Formation_.IdSoldier);
             return View(formationViewModel);
         }
 
@@ -298,7 +298,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             var Formation = await _context.Formations
                 .Include(s => s.IdHorseNavigation)
                 .Include(s => s.IdSoldierNavigation)
-                .FirstOrDefaultAsync(m => m.IdFormation == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (Formation == null)
             {
                 return NotFound();
@@ -320,7 +320,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
         private bool FormationExists(int id)
         {
-            return _context.Formations.Any(e => e.IdFormation == id);
+            return _context.Formations.Any(e => e.Id == id);
         }
     }
 }

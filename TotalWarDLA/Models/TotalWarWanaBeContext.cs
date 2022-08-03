@@ -43,14 +43,14 @@ namespace TotalWarDLA.Models
 
             modelBuilder.Entity<Barding>(entity =>
             {
-                entity.HasKey(e => e.IdBarding);
+                entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.BardingName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Faction>(entity =>
             {
-                entity.HasKey(e => e.IdFaction);
+                entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.FactionDescription).HasMaxLength(255);
 
@@ -78,7 +78,7 @@ namespace TotalWarDLA.Models
 
             modelBuilder.Entity<Horse>(entity =>
             {
-                entity.HasKey(e => e.IdHorse);
+                entity.HasKey(e => e.Id);
 
                 entity.HasIndex(e => e.IdBarding, "IX_Horses_IdBarding");
 
@@ -92,7 +92,7 @@ namespace TotalWarDLA.Models
 
             modelBuilder.Entity<Item>(entity =>
             {
-                entity.HasKey(e => e.IdItem);
+                entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.ItemName).HasMaxLength(255);
             });
@@ -118,7 +118,7 @@ namespace TotalWarDLA.Models
 
             modelBuilder.Entity<Formation>(entity =>
             {
-                entity.HasKey(e => e.IdFormation);
+                entity.HasKey(e => e.Id);
 
                 entity.HasIndex(e => e.IdHorse, "IX_Formations_IdHorse" /*what are thowse at the end */);
 
@@ -158,14 +158,14 @@ namespace TotalWarDLA.Models
 
             modelBuilder.Entity<SoldierModel>(entity =>
             {
-                entity.HasKey(e => e.IdSoldier);
+                entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.SoldierName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Trait>(entity =>
             {
-                entity.HasKey(e => e.IdTrait);
+                entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.TraitDescription).HasMaxLength(255);
 

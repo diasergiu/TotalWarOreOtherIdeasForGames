@@ -27,7 +27,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             FactionViewModel factionViewModel = new FactionViewModel();
             factionViewModel.ListFormations = await _context.Formations.ToListAsync();
             //look at way is this not working
-            ViewData["IdFormation"] = new SelectList(_context.Formations, "IdFormation", "FormationName");
+            ViewData["Formations"] = new SelectList(_context.Formations, "Id", "FormationName");
             return View(factionViewModel);
         }
         [HttpPost]
@@ -37,7 +37,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             _context.Factions.Add(faction.Faction_);
             foreach(int idFormation in faction.Formations_)
             {
-                _context.FactionFormations.Add(new FactionFormation(faction.Faction_,await _context.Formations.FirstOrDefaultAsync(format => format.IdFormation == idFormation)));
+                _context.FactionFormations.Add(new FactionFormation(faction.Faction_,await _context.Formations.FirstOrDefaultAsync(format => format.Id == idFormation)));
             }
             await _context.SaveChangesAsync();
            
@@ -49,7 +49,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            return View(await _context.Factions.FirstOrDefaultAsync(f => f.IdFaction == id));
+            return View(await _context.Factions.FirstOrDefaultAsync(f => f.Id == id));
 
         }
         public async Task<IActionResult> EditFaction(int? id)
@@ -60,7 +60,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             // pe bune
             FactionViewModel FVM = new FactionViewModel();
-            FVM.Faction_ = await _context.Factions.Include("FactionFormations").FirstOrDefaultAsync(f => f.IdFaction == id);
+            FVM.Faction_ = await _context.Factions.Include("FactionFormations").FirstOrDefaultAsync(f => f.Id == id);
             FVM.ListFormations = _context.Formations;
             FVM.Formations_ =new int[FVM.Faction_.FactionFormations.Count];
             int i = 0;
@@ -73,9 +73,9 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditFaction(int id,/*[Bind("IdFaction,FactionName,FactionDescription,Formations_")]*/FactionViewModel factionViewModel)
+        public async Task<IActionResult> EditFaction(int id,/*[Bind("Id,FactionName,FactionDescription,Formations_")]*/FactionViewModel factionViewModel)
         {
-            if (factionViewModel.Faction_.IdFaction != id) {
+            if (factionViewModel.Faction_.Id != id) {
                 return NotFound();
             }
             if (ModelState.IsValid)
@@ -83,7 +83,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 // not a good alghorithm for dooing this first i should send the list of formations not just the ID's
                 // second i should probabli itherate throw 1'ts not tuice 
                 // third i should if i could delete elements that are in common from the list while itherating throw them 
-                var oldListFactionFormation = _context.FactionFormations.Where(ff => ff.IdFaction == factionViewModel.Faction_.IdFaction).ToList();
+                var oldListFactionFormation = _context.FactionFormations.Where(ff => ff.IdFaction == factionViewModel.Faction_.Id).ToList();
                 foreach(int newId in factionViewModel.Formations_)
                 {
                     bool isNew = true;
@@ -96,7 +96,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                     }
                     if (isNew)
                     {
-                        _context.FactionFormations.Add(new FactionFormation(factionViewModel.Faction_, _context.Formations.FirstOrDefault(form => form.IdFormation == newId/*After loading from the database in view and lodin again in oldList we search the database again*/)));
+                        _context.FactionFormations.Add(new FactionFormation(factionViewModel.Faction_, _context.Formations.FirstOrDefault(form => form.Id == newId/*After loading from the database in view and lodin again in oldList we search the database again*/)));
                     }
                 }
 
@@ -136,7 +136,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 {
                     return NotFound();
                 }
-            _context.Factions.Remove(await _context.Factions.FirstOrDefaultAsync(f => f.IdFaction == id));
+            _context.Factions.Remove(await _context.Factions.FirstOrDefaultAsync(f => f.Id == id));
             await _context.SaveChangesAsync();
             return RedirectToAction("IndexFaction");
         }

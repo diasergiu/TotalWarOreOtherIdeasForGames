@@ -33,18 +33,18 @@
             @Html.DisplayNameFor(model => model.IdHorseNavigation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdHorseNavigation.IdHorse)
+            @Html.DisplayFor(model => model.IdHorseNavigation.Id)
         </dd class>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdSoldierNavigation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdSoldierNavigation.IdSoldier)
+            @Html.DisplayFor(model => model.IdSoldierNavigation.Id)
         </dd class>
     </dl>
     
     <form asp-action="DeleteFormation">
-        <input type="hidden" asp-for="IdFormation" />
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="IndexFormation">Back to List</a>
     </form>

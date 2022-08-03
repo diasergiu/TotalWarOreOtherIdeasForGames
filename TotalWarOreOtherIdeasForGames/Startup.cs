@@ -41,7 +41,6 @@ namespace TotalWarOreOtherIdeasForGames
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
             
             app.UseRouting();

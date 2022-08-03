@@ -14,7 +14,7 @@
     <div class="col-md-4">
         <form asp-action="EditFaction">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Faction_.IdFaction" />
+            <input type="hidden" asp-for="Faction_.Id" />
             <div class="form-group">
                 <label asp-for="Faction_.FactionName" class="control-label"></label>
                 <input asp-for="Faction_.FactionName" class="form-control" />
@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Formations_" class="=control-label"></label>
-                @Html.ListBoxFor(f => f.Formations_, new SelectList(Model.ListFormations, "IdFormation", "FormationName"));
+                @Html.ListBoxFor(f => f.Formations_, new SelectList(Model.ListFormations, "Id", "FormationName"));
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
