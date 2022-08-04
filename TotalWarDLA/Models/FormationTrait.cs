@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using TotalWarDLA.Models.NonDataModels;
 
 #nullable disable
@@ -17,11 +18,15 @@ namespace TotalWarDLA.Models
         {
             this.IdFormationNavigation = formation;
             this.IdTraitNavigation = trait;
-            this.IdTrait = trait.Id;
-            this.IdFormation = formation.Id;
+            this.IdRight = trait.Id;
+            this.IdLeft = formation.Id;
         }
-        public int IdFormation { get; set; }
-        public int IdTrait { get; set; }
+        [ForeignKey("IdFormationNavigation")]
+        [Column("IdFormation")]
+        public override int IdLeft { get; set; }
+        [ForeignKey("IdTraitNavigation")]
+        [Column("IdTrait")]
+        public override int IdRight { get; set; }
 
         public virtual Formation IdFormationNavigation { get; set; }
         public virtual Trait IdTraitNavigation { get; set; }

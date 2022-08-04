@@ -8,8 +8,8 @@ namespace TotalWarDLA.Models.NonDataModels
 {
     public abstract class IJointModel
     {
-        //public abstract int IdLeft { get; set; }
-        //public abstract int IdRight { get; set; }
+        public abstract int IdLeft { get; set; }
+        public abstract int IdRight { get; set; }
         //public IJointModel(){}   
         //public IJointModel(IModel navigateLeft, IModel navigateRight)
         //{

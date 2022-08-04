@@ -112,12 +112,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 formationViewModel.Items_[i] = commonItem.IdItem;
                 i++;
             }
-            var listTraits = _context.FormationTraits.Where(i => i.IdFormation == id);
+            var listTraits = _context.FormationTraits.Where(i => i.IdLeft == id);
             i = 0;
             formationViewModel.Traits_ = new int[listTraits.Count()];
             foreach (var commonTrait in listTraits)
             {
-                formationViewModel.Traits_[i] = commonTrait.IdTrait;
+                formationViewModel.Traits_[i] = commonTrait.IdRight;
                 i++;
             }
             var listFactions = _context.FactionFormations.Where(i => i.IdFormation == id);
@@ -194,14 +194,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         }
                     }
 
-                    var oldListTraitFormation = _context.FormationTraits.Where(ff => ff.IdFormation == formationViewModel.Formation_.Id).ToList();
+                    var oldListTraitFormation = _context.FormationTraits.Where(ff => ff.IdLeft == formationViewModel.Formation_.Id).ToList();
                     foreach (int newId in formationViewModel.Traits_)
                     {
                         bool isNew = true;
 
                         foreach (FormationTrait FF in oldListTraitFormation)
                         {
-                            if (FF.IdTrait == newId)
+                            if (FF.IdRight == newId)
                             {
                                 isNew = false;
                                 break;
@@ -218,7 +218,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         bool needRemove = true;
                         foreach (int newId in formationViewModel.Traits_)
                         {
-                            if (ff.IdTrait == newId)
+                            if (ff.IdRight == newId)
                             {
                                 needRemove = false;
                                 break;

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using TotalWarDLA.Models.NonDataModels;
 
 #nullable disable
 
 namespace TotalWarDLA.Models
 {
-    public partial class ItemFormation :IJointModel
+    public partial class ItemFormation 
     {
         public ItemFormation()
         {
@@ -20,16 +21,14 @@ namespace TotalWarDLA.Models
             this.IdFormationNavigation = formation;
             
         }
-
+        [Column("IdItem")]
         public int IdItem { get; set; }
+        [Column("IdFormation")]
         public int IdFormation { get; set; }
 
         public virtual Item IdItemNavigation { get; set; }
         public virtual Formation IdFormationNavigation { get; set; }
 
-        public override void saveYourself(TotalWarWanaBeContext context)
-        {
-            context.ItemFormations.Add(this);
-        }
+        
     }
 }

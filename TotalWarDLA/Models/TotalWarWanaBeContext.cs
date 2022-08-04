@@ -139,20 +139,20 @@ namespace TotalWarDLA.Models
 
             modelBuilder.Entity<FormationTrait>(entity =>
             {
-                entity.HasKey(e => new { e.IdFormation, e.IdTrait });
+                entity.HasKey(e => new { e.IdLeft, e.IdRight });
 
                 entity.ToTable("FormationTrait");
 
-                entity.HasIndex(e => e.IdTrait, "IX_FormationTrait_TraitsIdTrait");
+                entity.HasIndex(e => e.IdRight, "IX_FormationTrait_TraitsIdTrait");
 
                 entity.HasOne(d => d.IdFormationNavigation)
                     .WithMany(p => p.FormationTraits)
-                    .HasForeignKey(d => d.IdFormation)
+                    .HasForeignKey(d => d.IdLeft)
                     .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.IdTraitNavigation)
                     .WithMany(p => p.FormationTraits)
-                    .HasForeignKey(d => d.IdTrait)
+                    .HasForeignKey(d => d.IdRight)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

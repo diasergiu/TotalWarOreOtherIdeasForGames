@@ -55,7 +55,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateTrait([Bind("Id,TraitDescription,TraitName")] TraitViewModel trait)
+        public async Task<IActionResult> CreateTrait(TraitViewModel trait)
         {
             if (ModelState.IsValid)
             {
@@ -82,12 +82,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            var listFormation = _context.FormationTraits.Where(f => f.IdTrait == id).ToList();
+            var listFormation = _context.FormationTraits.Where(f => f.IdRight == id).ToList();
             // this needs to be removed
             tvm.Formations_ = new int[listFormation.Count];
             int i = 0;
             foreach(var forma in listFormation){
-                tvm.Formations_[i] = forma.IdFormation;
+                tvm.Formations_[i] = forma.IdLeft;
                 i++;
             }
             ViewData["Formations"] = new SelectList(_context.Formations, "Id", "FormationName");
@@ -111,14 +111,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 try
                 {
                     _context.Traits.Update(traitViewModel.Trait_);
-                    var oldListFactionFormation = _context.FormationTraits.Where(ft => ft.IdTrait == traitViewModel.Trait_.Id).ToList();
+                    var oldListFactionFormation = _context.FormationTraits.Where(ft => ft.IdRight == traitViewModel.Trait_.Id).ToList();
                     foreach (int newId in traitViewModel.Formations_)
                     {
                         bool isNew = true;
 
                         foreach (FormationTrait ft in oldListFactionFormation)
                         {
-                            if (ft.IdFormation == newId)
+                            if (ft.IdLeft == newId)
                             {
                                 isNew = false;
                                 break;
@@ -136,7 +136,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         bool needRemove = true;
                         foreach (int newId in traitViewModel.Formations_)
                         {
-                            if (ft.IdFormation == newId)
+                            if (ft.IdLeft == newId)
                             {
                                 needRemove = false;
                             }
