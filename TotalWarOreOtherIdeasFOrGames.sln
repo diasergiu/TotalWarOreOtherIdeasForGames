@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TotalWarOreOtherIdeasForGam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TotalWarDLA", "TotalWarDLA\TotalWarDLA.csproj", "{6F2E82B7-756B-4082-BDFD-B3DA3D5D86C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTotalWar", "TestTotalWar\TestTotalWar.csproj", "{C33F919E-A907-4EA8-98F1-5082D86AA2BE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{6F2E82B7-756B-4082-BDFD-B3DA3D5D86C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F2E82B7-756B-4082-BDFD-B3DA3D5D86C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F2E82B7-756B-4082-BDFD-B3DA3D5D86C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C33F919E-A907-4EA8-98F1-5082D86AA2BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C33F919E-A907-4EA8-98F1-5082D86AA2BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C33F919E-A907-4EA8-98F1-5082D86AA2BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C33F919E-A907-4EA8-98F1-5082D86AA2BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

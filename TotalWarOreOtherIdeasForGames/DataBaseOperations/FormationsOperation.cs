@@ -41,10 +41,10 @@ namespace TotalWarOreOtherIdeasForGames.DataBaseOperations
         }
 
         // the method that is suppose to replace all the three mothods down
-        //private void saveJointTable(int[] numd, IModel_ model, IJointModel jointTableModel)
-        //{
-        //    for (int i = 0, )
-        //}
+        private void saveJointTable(int[] numd, IModel_ model, IJointModel jointTableModel)
+        {
+            for (int i = 0, )
+        }
         private async void SaveItem(int[] items, Formation formation){
             for(int i = 0; i < items.Length; i++){
                 _context.ItemFormations.Add(new ItemFormation(await _context.Items.FirstOrDefaultAsync(q => q.Id == i), formation));

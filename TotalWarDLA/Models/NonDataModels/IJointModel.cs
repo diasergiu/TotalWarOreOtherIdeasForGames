@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace TotalWarDLA.Models.NonDataModels
 {
-    public abstract class IJointModel
+    public interface IJointModel
     {
-        public abstract int IdLeft { get; set; }
-        public abstract int IdRight { get; set; }
-        //public IJointModel(){}   
+        public int IdLeft { get; set; }
+        public int IdRight { get; set; }
+        public IModel_ GetIdNavigationLeftModel();
+        public void SetIdNavigationLeftModel(IModel_ modelLeft);
+        public IModel_ GetIdNavigationRightModel();
+        public void SetIdNavigationRightModel(IModel_ modelRight);
+
+        public void saveYourself(TotalWarWanaBeContext context);
+
+        //public IJointModel() { }
         //public IJointModel(IModel navigateLeft, IModel navigateRight)
         //{
         //    this.IdNavigationLeftModel = navigateLeft;
@@ -18,9 +25,6 @@ namespace TotalWarDLA.Models.NonDataModels
         //    this.IdLeft = navigateLeft.Id;
         //    this.IdRight = navigateRight.Id;
         //}
-        //public abstract IModel IdNavigationLeftModel { get; set; }
-        //public abstract IModel IdNavigationRightModel { get; set; }
-
-        public abstract void saveYourself(TotalWarWanaBeContext context);       
     }
 }
+

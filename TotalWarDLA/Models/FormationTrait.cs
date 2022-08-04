@@ -23,17 +23,40 @@ namespace TotalWarDLA.Models
         }
         [ForeignKey("IdFormationNavigation")]
         [Column("IdFormation")]
-        public override int IdLeft { get; set; }
+        public int IdLeft { get; set; }
         [ForeignKey("IdTraitNavigation")]
         [Column("IdTrait")]
-        public override int IdRight { get; set; }
+        public int IdRight { get; set; }
 
         public virtual Formation IdFormationNavigation { get; set; }
         public virtual Trait IdTraitNavigation { get; set; }
+        #region "Get_set_IJoinModel" 
+        public IModel_ GetIdNavigationLeftModel()
+        {
+            return this.IdFormationNavigation;
+        }
 
-        public override void saveYourself(TotalWarWanaBeContext context)
+        public IModel_ GetIdNavigationRightModel()
+        {
+            return this.IdTraitNavigation;
+        }
+        public void SetIdNavigationLeftModel(IModel_ modelLeft)
+        {
+            this.IdFormationNavigation = (Formation)modelLeft;
+        }
+
+        public void SetIdNavigationRightModel(IModel_ modelRight)
+        {
+            this.IdTraitNavigation = (Trait)modelRight;
+        }
+        #endregion
+
+        public void saveYourself(TotalWarWanaBeContext context)
         {
             context.FormationTraits.Add(this);
         }
     }
+
+        
 }
+
