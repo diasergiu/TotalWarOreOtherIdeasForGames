@@ -5,21 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TotalWarDLA.Models;
+using TotalWarDLA.Models.Pagination;
+using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class BardingController : Controller
     {
+        // wonder way is it readonly and if i need to make the operation class readonly
+        //private readonly TotalWarWanaBeContext _context;
+        private BardingsOperations operations;
 
-        private readonly TotalWarWanaBeContext _context;
-
-        public BardingController()
+        public BardingController(TotalWarWanaBeContext context)
         {
-            _context = new TotalWarWanaBeContext();
+            this.operations = new BardingsOperations(context);
         }
-        public async Task<IActionResult> IndexBarding()
+        public async Task<IActionResult> IndexBarding([FromQuery] PageInformationSender page)
         {
-            return View(await _context.Bardings.ToListAsync());
+            return View(await operations.GetPageOfBarding(page));
         }
         public IActionResult CreateBarding()
         {
@@ -31,8 +34,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         public async Task<IActionResult> CreateBarding([Bind("BardingName,ArmorValue")] Barding barding)
         {
             // not looked inte so see how it is created
-            _context.Bardings.Add(barding);
-            await _context.SaveChangesAsync();
+            operations._context.Bardings.Add(barding);
+            await operations._context.SaveChangesAsync();
             return RedirectToAction("CreateBarding");
 
         }
@@ -42,7 +45,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            var barding = await _context.Bardings.FirstOrDefaultAsync(b => b.Id == id);
+            var barding = await operations._context.Bardings.FirstOrDefaultAsync(b => b.Id == id);
             if (barding == null)
             {
                 return NotFound();
@@ -55,7 +58,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            var barding = await _context.Bardings.FirstOrDefaultAsync(b => b.Id == id);
+            var barding = await operations._context.Bardings.FirstOrDefaultAsync(b => b.Id == id);
             if (barding == null)
             {
                 return NotFound();
@@ -74,8 +77,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             if (ModelState.IsValid) {
                 try
                 {
-                    _context.Bardings.Update(barding);
-                    await _context.SaveChangesAsync();
+                    operations._context.Bardings.Update(barding);
+                    await operations._context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -103,8 +106,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            _context.Bardings.Remove(await _context.Bardings.FirstOrDefaultAsync(b => b.Id == id));
-            await _context.SaveChangesAsync();
+            operations._context.Bardings.Remove(await operations._context.Bardings.FirstOrDefaultAsync(b => b.Id == id));
+            await operations._context.SaveChangesAsync();
             return RedirectToAction("IndexBarding");
         }
     }

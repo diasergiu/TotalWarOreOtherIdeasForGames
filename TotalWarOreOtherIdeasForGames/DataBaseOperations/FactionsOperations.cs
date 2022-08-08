@@ -4,17 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TotalWarDLA.Models;
+using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.DataBaseOperations
 {
-    public class FactionOperation
+    public class FactionsOperations
     {
         public TotalWarWanaBeContext _context;
 
-        public FactionOperation(TotalWarWanaBeContext context)
+        public FactionsOperations(TotalWarWanaBeContext context)
         {
             this._context = context;
+        }
+
+        public async Task<IEnumerable<Faction>> GetPageOfFactions(PageInformationSender page)
+        {
+            return await _context.Factions.Skip((page.PageNumber - 1) * page.PageSize)
+                .Take(page.PageSize).ToListAsync();
         }
 
         public async Task<FactionViewModel> getViewModel(int id)

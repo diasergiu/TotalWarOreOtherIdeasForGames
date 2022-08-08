@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using TotalWarDLA.Models;
+using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 using TotalWarOreOtherIdeasForGames.ViewModel;
 
@@ -12,15 +13,15 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
     public class FactionController : Controller
     {
 
-        private readonly FactionOperation factionOperations;
+        private readonly FactionsOperations factionOperations;
 
         public FactionController(TotalWarWanaBeContext context)
         {
-            this.factionOperations = new FactionOperation(context);
+            this.factionOperations = new FactionsOperations(context);
         }
-        public async Task<IActionResult> IndexFaction()
+        public async Task<IActionResult> IndexFaction(PageInformationSender page)
         {
-            return View(await factionOperations._context.Factions.ToListAsync());
+            return View(await factionOperations.GetPageOfFactions(page));
         }
         public async Task<IActionResult> CreateFaction()
         {

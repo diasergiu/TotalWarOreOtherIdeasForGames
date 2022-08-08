@@ -6,22 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalWarDLA.Models;
+using TotalWarDLA.Models.Pagination;
+using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class ItemController : Controller
     {
-        private readonly TotalWarWanaBeContext _context;
+        private ItemsOperations operations;
 
         public ItemController(TotalWarWanaBeContext context)
         {
-            _context = context;
+            this.operations = new ItemsOperations(context);
         }
 
-        public async Task<IActionResult> IndexItem()
+        public async Task<IActionResult> IndexItem(PageInformationSender page)
         {
-            return View(await _context.Items.ToListAsync());
+            return View(await operations.GetPageOfItems(page));
         }
         public async Task<IActionResult> DetailsItem(int? id)
         {
@@ -30,7 +32,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 return NotFound();
             }
 
-            var item = await _context.Items
+            var item = await operations._context.Items
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
@@ -41,7 +43,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public  IActionResult CreateItem()
         {
-            ViewData["Formations"] = new SelectList(_context.Formations, "Id", "FormationName");
+            ViewData["Formations"] = new SelectList(operations._context.Formations, "Id", "FormationName");
             return View();
         }
 
@@ -51,12 +53,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         {
             if (ModelState.IsValid)
             {
-                _context.Items.Add(item.Item_);
+                operations._context.Items.Add(item.Item_);
                 foreach(int id in item.Formations_)
                 {
-                    _context.ItemFormations.Add(new ItemFormation(item.Item_,await _context.Formations.FirstOrDefaultAsync(f => f.Id == id)));
+                    operations._context.ItemFormations.Add(new ItemFormation(item.Item_,await operations._context.Formations.FirstOrDefaultAsync(f => f.Id == id)));
                 }
-                await _context.SaveChangesAsync();
+                await operations._context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(item);
@@ -68,14 +70,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-            ViewData["Formations"] = new SelectList(_context.Formations, "Id", "FormationName");
-            ItemViewModel itemViewModel = new ItemViewModel(await _context.Items.FindAsync(id));
+            ViewData["Formations"] = new SelectList(operations._context.Formations, "Id", "FormationName");
+            ItemViewModel itemViewModel = new ItemViewModel(await operations._context.Items.FindAsync(id));
             if (itemViewModel.Item_ == null)
             {
                 return NotFound();
             }
             // pe bune trebuie sa schimb asta 
-            List<ItemFormation> itemsFormation = _context.ItemFormations.Where(if_ => if_.IdItem == id).ToList();
+            List<ItemFormation> itemsFormation = operations._context.ItemFormations.Where(if_ => if_.IdItem == id).ToList();
             itemViewModel.Formations_ = new int[itemsFormation.Count];
             int i = 0;
             foreach(var item in itemsFormation)
@@ -101,8 +103,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 try
                 {
-                    _context.Update(item.Item_);
-                    var listItemFormation = _context.ItemFormations.Where(if_ => if_.IdItem == item.Item_.Id);
+                    operations._context.Update(item.Item_);
+                    var listItemFormation = operations._context.ItemFormations.Where(if_ => if_.IdItem == item.Item_.Id);
                     
                     foreach (var itemFormation in listItemFormation){
                         bool needsRemove = true;
@@ -113,7 +115,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                             }
                         }
                         if (needsRemove){
-                            _context.ItemFormations.Remove(itemFormation);
+                            operations._context.ItemFormations.Remove(itemFormation);
                         }
                     }
 
@@ -126,10 +128,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                         }
                         if (needsAdded)
                         {
-                            _context.ItemFormations.Add(new ItemFormation(item.Item_, _context.Formations.FirstOrDefault(f => f.Id == item.Formations_[i])));
+                            operations._context.ItemFormations.Add(new ItemFormation(item.Item_, operations._context.Formations.FirstOrDefault(f => f.Id == item.Formations_[i])));
                         }
                     }
-                    await _context.SaveChangesAsync();
+                    await operations._context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -154,7 +156,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 return NotFound();
             }
 
-            var item = await _context.Items
+            var item = await operations._context.Items
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
@@ -168,15 +170,15 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var item = await _context.Items.FindAsync(id);
-            _context.Items.Remove(item);
-            await _context.SaveChangesAsync();
+            var item = await operations._context.Items.FindAsync(id);
+            operations._context.Items.Remove(item);
+            await operations._context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ItemExists(int id)
         {
-            return _context.Items.Any(e => e.Id == id);
+            return operations._context.Items.Any(e => e.Id == id);
         }
     }
 }

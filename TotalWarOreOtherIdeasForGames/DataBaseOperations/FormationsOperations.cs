@@ -6,17 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using TotalWarDLA.Models;
 using TotalWarDLA.Models.NonDataModels;
+using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.DataBaseOperations
 {
-    public class FormationsOperation
+    public class FormationsOperations
     {
         public readonly TotalWarWanaBeContext _context;
         // not in use yet 
-        public FormationsOperation(TotalWarWanaBeContext context)
+        public FormationsOperations(TotalWarWanaBeContext context)
         {
             this._context = context;
+        }
+
+        public async Task<IEnumerable<Formation>> GetPageOfFormations(PageInformationSender page)
+        {
+            return await _context.Formations.Skip((page.PageNumber - 1) * page.PageSize)
+                .Take(page.PageSize).ToListAsync();
         }
 
         #region save Formation

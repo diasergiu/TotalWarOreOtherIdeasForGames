@@ -6,23 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalWarDLA.Models;
+using TotalWarDLA.Models.Pagination;
+using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class HorseController : Controller
     {
-        private readonly TotalWarWanaBeContext _context;
+        private HorsesOperations operations;
 
         public HorseController(TotalWarWanaBeContext context)
         {
-            _context = context;
+            this.operations = new HorsesOperations(context);
         }
 
         // GET: Horse
-        public async Task<IActionResult> IndexHorse()
+        public async Task<IActionResult> IndexHorse(PageInformationSender page) 
         {
-            var totalWarWanaBeContext = _context.Horses.Include(h => h.IdBardingNavigation);
-            return View(await totalWarWanaBeContext.ToListAsync());
+            return View(await operations.GetPageOfHorses(page));
         }
 
         // GET: Horse/Details/5
@@ -33,7 +34,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 return NotFound();
             }
 
-            var horse = await _context.Horses
+            var horse = await operations._context.Horses
                 .Include(h => h.IdBardingNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (horse == null)
@@ -47,7 +48,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Horse/Create
         public IActionResult CreateHorse()
         {
-            ViewData["Bardings"] = new SelectList(_context.Bardings, "Id", "BardingName");
+            ViewData["Bardings"] = new SelectList(operations._context.Bardings, "Id", "BardingName");
             return View();
         }
 
@@ -60,11 +61,11 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         {
             if (ModelState.IsValid)
             {
-                _context.Add(horse);
-                await _context.SaveChangesAsync();
+                operations._context.Add(horse);
+                await operations._context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Bardings"] = new SelectList(_context.Bardings, "Id", "Id", horse.IdBarding);
+            ViewData["Bardings"] = new SelectList(operations._context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
 
@@ -76,12 +77,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 return NotFound();
             }
 
-            var horse = await _context.Horses.FindAsync(id);
+            var horse = await operations._context.Horses.FindAsync(id);
             if (horse == null)
             {
                 return NotFound();
             }
-            ViewData["Bardings"] = new SelectList(_context.Bardings, "Id", "Id", horse.IdBarding);
+            ViewData["Bardings"] = new SelectList(operations._context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
 
@@ -101,8 +102,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 try
                 {
-                    _context.Update(horse);
-                    await _context.SaveChangesAsync();
+                    operations._context.Update(horse);
+                    await operations._context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,7 +118,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Bardings"] = new SelectList(_context.Bardings, "Id", "Id", horse.IdBarding);
+            ViewData["Bardings"] = new SelectList(operations._context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
 
@@ -129,7 +130,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 return NotFound();
             }
 
-            var horse = await _context.Horses
+            var horse = await operations._context.Horses
                 .Include(h => h.IdBardingNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (horse == null)
@@ -145,15 +146,15 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var horse = await _context.Horses.FindAsync(id);
-            _context.Horses.Remove(horse);
-            await _context.SaveChangesAsync();
+            var horse = await operations._context.Horses.FindAsync(id);
+            operations._context.Horses.Remove(horse);
+            await operations._context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool HorseExists(int id)
         {
-            return _context.Horses.Any(e => e.Id == id);
+            return operations._context.Horses.Any(e => e.Id == id);
         }
     }
 }

@@ -6,22 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalWarDLA.Models;
+using TotalWarDLA.Models.Pagination;
+using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class SoldierModelController : Controller
     {
-        private readonly TotalWarWanaBeContext _context;
+        private SoldierModelsOperations operations;
 
         public SoldierModelController(TotalWarWanaBeContext context)
         {
-            _context = context;
+            operations = new SoldierModelsOperations(context);
         }
 
         // GET: SoldierModels
-        public async Task<IActionResult> IndexSoldierModel()
+        public async Task<IActionResult> IndexSoldierModel(PageInformationSender page)
         {
-            return View(await _context.SoldierModels.ToListAsync());
+            return View(await operations.GetPageOfSoldiers(page));
         }
 
         // GET: SoldierModels/Details/5
@@ -32,7 +34,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 return NotFound();
             }
 
-            var soldierModel = await _context.SoldierModels
+            var soldierModel = await operations._context.SoldierModels
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (soldierModel == null)
             {
@@ -57,8 +59,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         {
             if (ModelState.IsValid)
             {
-                _context.Add(soldierModel);
-                await _context.SaveChangesAsync();
+                operations._context.Add(soldierModel);
+                await operations._context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(soldierModel);
@@ -72,7 +74,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 return NotFound();
             }
 
-            var soldierModel = await _context.SoldierModels.FindAsync(id);
+            var soldierModel = await operations._context.SoldierModels.FindAsync(id);
             if (soldierModel == null)
             {
                 return NotFound();
@@ -96,8 +98,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 try
                 {
-                    _context.Update(soldierModel);
-                    await _context.SaveChangesAsync();
+                    operations._context.Update(soldierModel);
+                    await operations._context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -123,7 +125,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 return NotFound();
             }
 
-            var soldierModel = await _context.SoldierModels
+            var soldierModel = await operations._context.SoldierModels
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (soldierModel == null)
             {
@@ -138,15 +140,15 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var soldierModel = await _context.SoldierModels.FindAsync(id);
-            _context.SoldierModels.Remove(soldierModel);
-            await _context.SaveChangesAsync();
+            var soldierModel = await operations._context.SoldierModels.FindAsync(id);
+            operations._context.SoldierModels.Remove(soldierModel);
+            await operations._context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SoldierModelExists(int id)
         {
-            return _context.SoldierModels.Any(e => e.Id == id);
+            return operations._context.SoldierModels.Any(e => e.Id == id);
         }
     }
 }

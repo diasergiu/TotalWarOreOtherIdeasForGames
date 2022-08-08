@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalWarDLA.Models;
+using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 using TotalWarOreOtherIdeasForGames.ViewModel;
 
@@ -13,18 +14,17 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class FormationController : Controller
     {
-        private readonly FormationsOperation formationOperations;
+        private readonly FormationsOperations formationOperations;
 
         public FormationController(TotalWarWanaBeContext context)
         {
-            this.formationOperations = new FormationsOperation(context);
+            this.formationOperations = new FormationsOperations(context);
         }
 
         // GET: Formation
-        public IActionResult IndexFormation()
+        public async  Task<IActionResult> IndexFormation(PageInformationSender page)
         {
-            var totalWarWanaBeContext = formationOperations.GetAllFormations();
-            return View(totalWarWanaBeContext);
+            return View(await formationOperations.GetPageOfFormations(page));
         }
 
         // GET: Formation/Details/5
