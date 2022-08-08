@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TotalWarOreOtherIdeasForGam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TotalWarDLA", "TotalWarDLA\TotalWarDLA.csproj", "{6F2E82B7-756B-4082-BDFD-B3DA3D5D86C6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DFB2E5CF-9825-48E1-BE29-F83496C221DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TotalWarOreOtherIdeasForGamesAPITest", "TotalWarOreOtherIdeasForGamesAPITest\TotalWarOreOtherIdeasForGamesAPITest.csproj", "{6A8A488E-BB31-4FCE-9FA3-157509B752E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{6F2E82B7-756B-4082-BDFD-B3DA3D5D86C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F2E82B7-756B-4082-BDFD-B3DA3D5D86C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F2E82B7-756B-4082-BDFD-B3DA3D5D86C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A8A488E-BB31-4FCE-9FA3-157509B752E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8A488E-BB31-4FCE-9FA3-157509B752E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8A488E-BB31-4FCE-9FA3-157509B752E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8A488E-BB31-4FCE-9FA3-157509B752E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6A8A488E-BB31-4FCE-9FA3-157509B752E7} = {DFB2E5CF-9825-48E1-BE29-F83496C221DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {937D2C1A-0309-4480-A69C-DD27F372C9FA}

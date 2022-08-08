@@ -15,7 +15,8 @@ namespace TotalWarDLA.Models.NonDataModels
         public IModel_ GetIdNavigationRightModel();
         public void SetIdNavigationRightModel(IModel_ modelRight);
 
-        public void saveYourself(TotalWarWanaBeContext context);
+        //public void SaveLeftRight(TotalWarWanaBeContext context, int[] right, IModel_ left);
+        //public void SaveRightLeft(TotalWarWanaBeContext context, int[] left, IModel_ right);
 
         //public IJointModel() { }
         //public IJointModel(IModel navigateLeft, IModel navigateRight)

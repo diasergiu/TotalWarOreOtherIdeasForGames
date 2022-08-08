@@ -51,12 +51,10 @@ namespace TotalWarDLA.Models
         }
         #endregion
 
-        public void saveYourself(TotalWarWanaBeContext context)
-        {
-            context.FormationTraits.Add(this);
+       
         }
     }
 
         
-}
+
 
