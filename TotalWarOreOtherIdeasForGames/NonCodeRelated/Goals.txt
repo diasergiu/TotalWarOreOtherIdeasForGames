@@ -6,7 +6,7 @@ Made the deletion and the updating with relationships
 
 Filtering : ( soldiersFormation with: factions, horses(if they have one), attack, defance, Stamina) 
 Searching
-pagination
+//pagination
 encripted password
 Immage Encripted into database
 Log in

@@ -8,21 +8,31 @@ using Microsoft.EntityFrameworkCore;
 using TotalWarDLA.Models;
 using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.DataBaseOperations;
+using TotalWarOreOtherIdeasForGames.DataBaseOperations.ImageConverter;
 using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class ItemController : Controller
     {
-        private ItemsOperations operations;
+        private readonly ItemsOperations operations;
 
         public ItemController(TotalWarWanaBeContext context)
         {
             this.operations = new ItemsOperations(context);
         }
 
-        public async Task<IActionResult> IndexItem(PageInformationSender page)
+        public async Task<IActionResult> IndexItem(int pageNumber, int pageSize)
         {
+            if(pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+            if(pageSize == 0)
+            {
+                pageSize = 5;
+            }
+            PageInformationSender page = new PageInformationSender(operations._context.Items.Count(), pageNumber, pageSize);
             return View(await operations.GetPageOfItems(page));
         }
         public async Task<IActionResult> DetailsItem(int? id)
@@ -38,7 +48,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 return NotFound();
             }
-
+            ViewBag.imgsrc = ImageConverter.Decrypt(item.Image);
             return View(item);
         }
         public  IActionResult CreateItem()
@@ -49,10 +59,11 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateItem(/*[Bind("Id,StaminaCost,SpeedCost,ItemName")]*/ ItemViewModel item)
+        public async Task<IActionResult> CreateItem(/*[Bind("Id,StaminaCost,SpeedCost,ItemName")]*/[FromForm]ItemViewModel item)
         {
             if (ModelState.IsValid)
             {
+                item.Item_.Image = ImageConverter.Encryption(item.ImageFile);
                 operations._context.Items.Add(item.Item_);
                 foreach(int id in item.Formations_)
                 {
@@ -103,6 +114,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             {
                 try
                 {
+                    item.Item_.Image = ImageConverter.Encryption(item.ImageFile);
                     operations._context.Update(item.Item_);
                     var listItemFormation = operations._context.ItemFormations.Where(if_ => if_.IdItem == item.Item_.Id);
                     

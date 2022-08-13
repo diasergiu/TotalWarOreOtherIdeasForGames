@@ -14,7 +14,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
     {
         // wonder way is it readonly and if i need to make the operation class readonly
         //private readonly TotalWarWanaBeContext _context;
-        private BardingsOperations operations;
+        private readonly BardingsOperations operations;
 
         public BardingController(TotalWarWanaBeContext context)
         {

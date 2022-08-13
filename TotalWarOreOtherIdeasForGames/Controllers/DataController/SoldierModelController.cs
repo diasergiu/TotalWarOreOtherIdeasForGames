@@ -13,7 +13,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class SoldierModelController : Controller
     {
-        private SoldierModelsOperations operations;
+        private readonly SoldierModelsOperations operations;
 
         public SoldierModelController(TotalWarWanaBeContext context)
         {

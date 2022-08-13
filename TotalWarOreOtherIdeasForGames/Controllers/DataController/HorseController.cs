@@ -13,7 +13,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class HorseController : Controller
     {
-        private HorsesOperations operations;
+        private readonly HorsesOperations operations;
 
         public HorseController(TotalWarWanaBeContext context)
         {

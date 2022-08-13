@@ -14,7 +14,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class TraitController : Controller
     {
-        private TraitsOperations operations;
+        private readonly TraitsOperations operations;
 
         public TraitController(TotalWarWanaBeContext context)
         {

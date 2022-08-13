@@ -63,7 +63,7 @@ namespace TotalWarOreOtherIdeasForGames.DataBaseOperations
             _context.Update(formationViewModel.Formation_);
             UpdateItemFormation(formationViewModel);
             UpdateTraitFormation(formationViewModel);
-            updateFactionFormation(formationViewModel);
+            UpdateFactionFormation(formationViewModel);
             await _context.SaveChangesAsync();
         }
 
@@ -145,7 +145,7 @@ namespace TotalWarOreOtherIdeasForGames.DataBaseOperations
             }
         }
 
-        private void updateFactionFormation(FormationViewModel formationViewModel)
+        private void UpdateFactionFormation(FormationViewModel formationViewModel)
         {
             var oldListFactionFormation = _context.FactionFormations.Where(ff => ff.IdFormation == formationViewModel.Formation_.Id).ToList();
             foreach (int newId in formationViewModel.Factions_)

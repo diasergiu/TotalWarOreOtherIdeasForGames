@@ -95,6 +95,7 @@ namespace TotalWarDLA.Models
                 entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.ItemName).HasMaxLength(255);
+                entity.Property(e => e.Image);
             });
 
             modelBuilder.Entity<ItemFormation>(entity =>
