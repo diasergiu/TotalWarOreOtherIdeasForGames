@@ -21,9 +21,20 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse
-        public async Task<IActionResult> IndexHorse(PageInformationSender page) 
+        // should look at how to make in the diferance between variable received in get and the ones in the model 
+        // i should not need to have the same variable name in the get method as in the the modle mothod 
+        // it violates variabe naming convention
+        public async Task<IActionResult> IndexHorse(int? CurrentPage, int? PageSize) 
         {
-            return View(await operations.GetPageOfHorses(page));
+            if (CurrentPage == null || CurrentPage == 0)
+            {
+                CurrentPage = 1;
+            }
+            if (PageSize == null || PageSize == 0)
+            {
+                PageSize = 5;
+            }
+            return View(PageModel<Horse>.ToPageModel(operations._context.Horses,(int)CurrentPage, (int)PageSize));
         }
 
         // GET: Horse/Details/5
@@ -121,8 +132,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             ViewData["Bardings"] = new SelectList(operations._context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
-        public async Task<IActionResult> DeleteHorse(int id)
+        public async Task<IActionResult> DeleteHorse(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             var horse = await operations._context.Horses.FindAsync(id);
             operations._context.Horses.Remove(horse);
             await operations._context.SaveChangesAsync();

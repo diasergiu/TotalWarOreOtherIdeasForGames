@@ -21,9 +21,17 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: SoldierModels
-        public async Task<IActionResult> IndexSoldierModel(PageInformationSender page)
+        public async Task<IActionResult> IndexSoldierModel(int? CurrentPage, int? PageSize)
         {
-            return View(await operations.GetPageOfSoldiers(page));
+            if (CurrentPage == null || CurrentPage == 0)
+            {
+                CurrentPage = 1;
+            }
+            if (PageSize == null || PageSize == 0)
+            {
+                PageSize = 5;
+            }
+            return View(PageModel<SoldierModel>.ToPageModel(operations._context.SoldierModels, (int)CurrentPage, (int)PageSize));
         }
 
         // GET: SoldierModels/Details/5

@@ -20,9 +20,17 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         {
             this.operations = new BardingsOperations(context);
         }
-        public async Task<IActionResult> IndexBarding([FromQuery] PageInformationSender page)
+        public async Task<IActionResult> IndexBarding(int? CurrentPage, int? PageSize)
         {
-            return View(await operations.GetPageOfBarding(page));
+            if (CurrentPage == null || CurrentPage == 0)
+            {   
+                CurrentPage = 1;
+            }
+            if (PageSize == null || PageSize == 0)
+            {
+                PageSize = 5;
+            }
+            return View(PageModel<Barding>.ToPageModel(operations._context.Bardings,(int)CurrentPage, (int)PageSize));
         }
         public IActionResult CreateBarding()
         {

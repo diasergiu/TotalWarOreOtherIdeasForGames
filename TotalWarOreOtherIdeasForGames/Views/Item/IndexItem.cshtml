@@ -11,17 +11,17 @@
 </p>
 <table class="table">
     <thead>
-        
+
         <tr>
             @*<th>
-                @Html.DisplayNameFor(model => model.Items.StaminaCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Items.SpeedCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Items.ItemName)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Items.StaminaCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Items.SpeedCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Items.ItemName)
+                </th>*@
             <th>Stamina Cost</th>
             <th>Speed Cost</th>
             <th>Item Name</th>
@@ -29,30 +29,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StaminaCost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpeedCost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemName)
-            </td>
-            <td>
-                <a asp-action="EditItem" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DetailsItem" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="DeleteItem" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaminaCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpeedCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    <a asp-action="EditItem" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="DetailsItem" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="DeleteItem" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
-
-       
-    
-    <a asp-action="IndexItem" asp-route-CurrentPage="@(Model.CurrentPage - 1)"  class="btn btn-default" >previos</a>         
-    <a asp-action="IndexItem" asp-route-CurrentPage="@(Model.CurrentPage + 1)"  class="btn btn-default" > Next</a>
+@{
+    if (Model.HasPrevios)
+    {
+        <a asp-action="IndexItem" asp-route-CurrentPage="@(Model.CurrentPage - 1)" class="btn btn-default">previos</a>
+    }
+    if (Model.HasNext)
+    {
+        <a asp-action="IndexItem" asp-route-CurrentPage="@(Model.CurrentPage + 1)" class="btn btn-default"> Next</a>
+    }
+}
 
 

@@ -19,9 +19,17 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         {
             this.factionOperations = new FactionsOperations(context);
         }
-        public async Task<IActionResult> IndexFaction(PageInformationSender page)
+        public async Task<IActionResult> IndexFaction(int? CurrentPage, int? PageSize)
         {
-            return View(await factionOperations.GetPageOfFactions(page));
+            if (CurrentPage == null || CurrentPage == 0)
+            {
+                CurrentPage = 1;
+            }
+            if (PageSize == null || PageSize == 0)
+            {
+                PageSize = 5;
+            }
+            return View(PageModel<Faction>.ToPageModel(factionOperations._context.Factions, (int)CurrentPage, (int)PageSize));
         }
         public async Task<IActionResult> CreateFaction()
         {

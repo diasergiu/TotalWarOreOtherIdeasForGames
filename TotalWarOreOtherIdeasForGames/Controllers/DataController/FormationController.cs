@@ -22,9 +22,17 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Formation
-        public async  Task<IActionResult> IndexFormation(PageInformationSender page)
+        public async  Task<IActionResult> IndexFormation(int? CurrentPage, int? PageSize)
         {
-            return View(await formationOperations.GetPageOfFormations(page));
+            if (CurrentPage == null || CurrentPage == 0)
+            {
+                CurrentPage = 1;
+            }
+            if (PageSize == null || PageSize == 0)
+            {
+                PageSize = 5;
+            }
+            return View(PageModel<Formation>.ToPageModel(formationOperations._context.Formations, (int)CurrentPage, (int)PageSize));
         }
 
         // GET: Formation/Details/5
@@ -131,9 +139,13 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             ViewData["Soldiers"] = new SelectList(formationOperations._context.SoldierModels, "Id", "Id", formationViewModel.Formation_.IdSoldier);
             return View(formationViewModel);
         }
-        public async Task<IActionResult> DeleteFormation(int id)
+        public async Task<IActionResult> DeleteFormation(int? id)
         {
-            await formationOperations.DeleteFormation(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+            await formationOperations.DeleteFormation((int)id);
             return RedirectToAction(nameof(IndexFormation));
         }
 

@@ -22,9 +22,17 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Trait
-        public async Task<IActionResult> IndexTrait(PageInformationSender page)
+        public async Task<IActionResult> IndexTrait(int? CurrentPage, int? PageSize)
         {
-            return View(await operations.GetPageOfTraits(page));
+            if (CurrentPage == null || CurrentPage == 0)
+            {
+                CurrentPage = 1;
+            }
+            if (PageSize == null || PageSize == 0)
+            {
+                PageSize = 5;
+            }
+            return View(PageModel<Trait>.ToPageModel(operations._context.Traits, (int)CurrentPage, (int)PageSize));
         }
 
         // GET: Trait/Details/5
@@ -165,8 +173,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(traitViewModel);
         }
-        public async Task<IActionResult> DeleteTrait(int id)
+        public async Task<IActionResult> DeleteTrait(int? id)
         {
+            if(id == null)
+            {
+                return NotFound();
+            }
             var trait = await operations._context.Traits.FindAsync(id);
             operations._context.Traits.Remove(trait);
             await operations._context.SaveChangesAsync();

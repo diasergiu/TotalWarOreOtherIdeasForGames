@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TotalWarDLA.Models.SoldierModel>
+﻿@model TotalWarDLA.Models.Pagination.PageModel<SoldierModel>;
 
 @{
     ViewData["Title"] = "Index";
@@ -12,54 +12,71 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AttackSkilll)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DefenceSkill)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stamina)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Speed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Acuracy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoldierName)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.AttackSkilll)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DefenceSkill)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stamina)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Speed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Acuracy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoldierName)
+                </th>*@
+            <th>Attack Skill</th>
+            <th>Defence Skill</th>
+            <th>Stamina</th>
+            <th>Speed</th>
+            <th>Acuracy</th>
+            <th>Soldier Name</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AttackSkilll)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DefenceSkill)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stamina)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Speed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Acuracy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoldierName)
-            </td>
-            <td>
-                <a asp-action="EditSoldierModel" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DetailsSoldierModel" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="DeleteSoldierModel" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttackSkilll)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DefenceSkill)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stamina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Speed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Acuracy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoldierName)
+                </td>
+                <td>
+                    <a asp-action="EditSoldierModel" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="DetailsSoldierModel" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="DeleteSoldierModel" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@{
+    if (Model.HasPrevios)
+    {
+        <a asp-action="IndexSoldierModel" asp-route-CurrentPage="@(Model.CurrentPage - 1)" class="btn btn-default">previos</a>
+    }
+    if (Model.HasNext)
+    {
+        <a asp-action="IndexSoldierModel" asp-route-CurrentPage="@(Model.CurrentPage + 1)" class="btn btn-default"> Next</a>
+    }
+}

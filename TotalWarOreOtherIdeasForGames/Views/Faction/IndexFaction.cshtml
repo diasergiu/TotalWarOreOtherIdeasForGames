@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TotalWarDLA.Models.Faction>
+﻿@model TotalWarDLA.Models.Pagination.PageModel<Faction>;
 
 @{
     ViewData["Title"] = "Index";
@@ -12,30 +12,43 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FactionName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FactionDescription)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.FactionName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FactionDescription)
+                </th>*@
+            <th> Faction Name</th>
+            <th>Faction Description</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FactionName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FactionDescription)
-            </td>
-            <td>
-                <a asp-action="EditFaction" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DetailsFaction" asp-route-id="@item.Id">Details</a> 
-                <a asp-action="DeleteFaction" asp-route-id="@item.Id"></a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FactionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FactionDescription)
+                </td>
+                <td>
+                    <a asp-action="EditFaction" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="DetailsFaction" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="DeleteFaction" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@{
+    if (Model.HasPrevios)
+    {
+        <a asp-action="IndexFaction" asp-route-CurrentPage="@(Model.CurrentPage - 1)" class="btn btn-default">previos</a>
+    }
+    if (Model.HasNext)
+    {
+        <a asp-action="IndexFaction" asp-route-CurrentPage="@(Model.CurrentPage + 1)" class="btn btn-default"> Next</a>
+    }
+}
