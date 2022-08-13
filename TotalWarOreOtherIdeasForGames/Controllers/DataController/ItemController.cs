@@ -163,28 +163,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(item);
         }
-
         public async Task<IActionResult> DeleteItem(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var item = await operations._context.Items
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return View(item);
-        }
-
-        [HttpPost, ActionName("DeleteItem")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
             var item = await operations._context.Items.FindAsync(id);
             operations._context.Items.Remove(item);
             await operations._context.SaveChangesAsync();

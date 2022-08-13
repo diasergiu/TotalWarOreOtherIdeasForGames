@@ -98,8 +98,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return RedirectToAction("EditBarding");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // again Delete probabli should be a post method 
         public async Task<IActionResult> DeleteBarding(int? id)
         {
             if(id == null)

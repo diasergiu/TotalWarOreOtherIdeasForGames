@@ -32,12 +32,8 @@
             </td>
             <td>
                 <a asp-action="EditFaction" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DetailsFaction" asp-route-id="@item.Id">Details</a> |
-                <form asp-action="DeleteFaction" asp-route-id="@item.Id" method="post">
-                    <div class="form-group">
-                        <input type="submit" value="Delete" class="btn btn-primary" />
-                    </div>
-                </form>
+                <a asp-action="DetailsFaction" asp-route-id="@item.Id">Details</a> 
+                <a asp-action="DeleteFaction" asp-route-id="@item.Id"></a>
             </td>
         </tr>
 }

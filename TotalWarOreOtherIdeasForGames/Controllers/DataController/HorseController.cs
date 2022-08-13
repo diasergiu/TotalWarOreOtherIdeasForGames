@@ -121,30 +121,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             ViewData["Bardings"] = new SelectList(operations._context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
-
-        // GET: Horse/Delete/5
-        public async Task<IActionResult> DeleteHorse(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var horse = await operations._context.Horses
-                .Include(h => h.IdBardingNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (horse == null)
-            {
-                return NotFound();
-            }
-
-            return View(horse);
-        }
-
-        // POST: Horse/Delete/5
-        [HttpPost, ActionName("DeleteHorse")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteHorse(int id)
         {
             var horse = await operations._context.Horses.FindAsync(id);
             operations._context.Horses.Remove(horse);

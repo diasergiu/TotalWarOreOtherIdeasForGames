@@ -131,29 +131,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             ViewData["Soldiers"] = new SelectList(formationOperations._context.SoldierModels, "Id", "Id", formationViewModel.Formation_.IdSoldier);
             return View(formationViewModel);
         }
-
-        // GET: Formation/Delete/5
-        [ActionName("DeleteFormation")]
-        public async Task<IActionResult> DeleteFormation(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var Formation = await formationOperations.GetFormation(id);
-            if (Formation == null)
-            {
-                return NotFound();
-            }
-
-            return View(Formation);
-        }
-
-        // POST: Formation/Delete/5
-        [HttpPost, ActionName("DeleteFormation")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteFormation(int id)
         {
             await formationOperations.DeleteFormation(id);
             return RedirectToAction(nameof(IndexFormation));

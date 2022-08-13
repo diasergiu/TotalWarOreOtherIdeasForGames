@@ -165,29 +165,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(traitViewModel);
         }
-
-        // GET: Trait/Delete/5
-        public async Task<IActionResult> DeleteTrait(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var trait = await operations._context.Traits
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (trait == null)
-            {
-                return NotFound();
-            }
-
-            return View(trait);
-        }
-
-        // POST: Trait/Delete/5
-        [HttpPost, ActionName("DeleteTrait")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteTrait(int id)
         {
             var trait = await operations._context.Traits.FindAsync(id);
             operations._context.Traits.Remove(trait);

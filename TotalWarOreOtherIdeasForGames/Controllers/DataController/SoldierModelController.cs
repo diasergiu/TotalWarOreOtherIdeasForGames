@@ -116,29 +116,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(soldierModel);
         }
-
-        // GET: SoldierModels/Delete/5
-        public async Task<IActionResult> DeleteSoldierModel(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var soldierModel = await operations._context.SoldierModels
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (soldierModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(soldierModel);
-        }
-
-        // POST: SoldierModels/Delete/5
-        [HttpPost, ActionName("DeleteSoldierModel")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteSoldierModel(int id)
         {
             var soldierModel = await operations._context.SoldierModels.FindAsync(id);
             operations._context.SoldierModels.Remove(soldierModel);

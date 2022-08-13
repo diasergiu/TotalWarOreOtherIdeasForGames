@@ -75,8 +75,6 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return RedirectToAction("EditFaction");
 
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteFaction(int? id)
         {
             if(id == null)
