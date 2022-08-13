@@ -9,14 +9,17 @@ namespace TotalWarDLA.Models.Pagination
     // not used yet. it seems like i can do it with just the information that are send from url
     public class PageModel<T> : List<T>
     {
-        public int CurrentPage { get; private set; }
-        public int TotalPages { get; private set; }
-        public int PageSize { get;private set; }
-        public int TotalCount { get; private set; }
+        public int CurrentPage { get;  set; }
+        public int TotalPages { get;  set; }
+        public int PageSize { get; set; }
+        public int TotalCount { get;  set; }
 
         public bool HasPrevios => CurrentPage > 1;
         public bool HasNext => CurrentPage < TotalPages;
+        public PageModel()
+        {
 
+        }
         public PageModel(List<T> items, int count, int pageNumber, int pageSize)
         {
             this.TotalCount = count;

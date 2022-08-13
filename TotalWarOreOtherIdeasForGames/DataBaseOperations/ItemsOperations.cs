@@ -17,9 +17,9 @@ namespace TotalWarOreOtherIdeasForGames.DataBaseOperations
             this._context = context;
         }
 
-        public async Task<IEnumerable<Item>> GetPageOfItems(PageInformationSender page)
+        public async Task<IEnumerable<Item>> GetPageOfItems(PageModel<Item> page)
         {
-            return await _context.Items.Skip((page.PageNumber - 1) * page.PageSize)
+            return await _context.Items.Skip((page.CurrentPage - 1) * page.PageSize)
                 .Take(page.PageSize).ToListAsync();
         }
     }

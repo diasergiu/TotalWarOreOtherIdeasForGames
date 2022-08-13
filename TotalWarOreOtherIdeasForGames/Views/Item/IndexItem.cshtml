@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TotalWarDLA.Models.Item>
+﻿@model TotalWarDLA.Models.Pagination.PageModel<Item>;
 
 @{
     ViewData["Title"] = "Index";
@@ -11,16 +11,17 @@
 </p>
 <table class="table">
     <thead>
+        
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StaminaCost)
+            @*<th>
+                @Html.DisplayNameFor(model => model.Items.StaminaCost)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SpeedCost)
+                @Html.DisplayNameFor(model => model.Items.SpeedCost)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ItemName)
-            </th>
+                @Html.DisplayNameFor(model => model.Items.ItemName)
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -45,3 +46,10 @@
 }
     </tbody>
 </table>
+
+       
+    
+    <a asp-action="IndexItem" asp-route-CurrentPage="@(Model.CurrentPage - 1)"  class="btn btn-default" >previos</a>         
+    <a asp-action="IndexItem" asp-route-CurrentPage="@(Model.CurrentPage + 1)"  class="btn btn-default" > Next</a>
+
+

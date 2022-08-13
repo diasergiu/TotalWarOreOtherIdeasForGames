@@ -22,18 +22,21 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             this.operations = new ItemsOperations(context);
         }
 
-        public async Task<IActionResult> IndexItem(int pageNumber, int pageSize)
+        public async Task<IActionResult> IndexItem(int CurrentPage, int PageSize)
         {
-            if(pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
-            if(pageSize == 0)
-            {
-                pageSize = 5;
-            }
-            PageInformationSender page = new PageInformationSender(operations._context.Items.Count(), pageNumber, pageSize);
-            return View(await operations.GetPageOfItems(page));
+            //if (page == null)
+            //{
+            //    return View(PageModel<Item>.ToPageModel(operations._context.Items, 1, 5));
+            //}
+                if (CurrentPage == 0)
+                {
+                    CurrentPage = 1;
+                }
+                if (PageSize == 0)
+                {
+                    PageSize = 5;
+                }
+            return View(PageModel<Item>.ToPageModel(operations._context.Items, CurrentPage, PageSize));
         }
         public async Task<IActionResult> DetailsItem(int? id)
         {

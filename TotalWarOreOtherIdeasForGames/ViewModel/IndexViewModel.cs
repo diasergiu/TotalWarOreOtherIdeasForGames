@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TotalWarDLA.Models;
 using TotalWarDLA.Models.Pagination;
 
 namespace TotalWarOreOtherIdeasForGames.ViewModel
 {
-    public class IndexViewModel<T>
+    public class IndexViewModel
     {
-        IEnumerable<T> ListModel { get; set; }
-        PageInformationSender page { get; set; }
+        public IEnumerable<Item> ListModel { get; set; }
+        public PageModel<Item> Page { get; set; }
+        public Item Items { get; set; }
     }
 }
