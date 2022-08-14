@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
 using TotalWarDLA.Models;
@@ -14,13 +15,16 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
     {
 
         private readonly FactionsOperations factionOperations;
+        private readonly ILogger logger;
 
-        public FactionController(TotalWarWanaBeContext context)
+        public FactionController(TotalWarWanaBeContext context, ILogger<FactionController> logger)
         {
+            this.logger = logger;
             this.factionOperations = new FactionsOperations(context);
         }
         public async Task<IActionResult> IndexFaction(int? CurrentPage, int? PageSize)
         {
+            logger.LogInformation("[Faction]: Oppened index with curent page {0} and page size {1} ", CurrentPage, PageSize);
             if (CurrentPage == null || CurrentPage == 0)
             {
                 CurrentPage = 1;
@@ -33,6 +37,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> CreateFaction()
         {
+            logger.LogInformation("[Faction]: Accesing the create View ");
             // nu imi place cum arata parte asta si ar trebui sa ma uit la ce este view models mai mult simt ca nu invat nimic aici doar aplic ce stiu deja
             FactionViewModel factionViewModel = new FactionViewModel();
             factionViewModel.ListFormations = await factionOperations._context.Formations.ToListAsync();
@@ -44,13 +49,16 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateFaction( FactionViewModel faction)
         {
+            logger.LogInformation("[Faction]: you are creating the faction {0}", faction.Faction_.FactionName);
             await factionOperations.CreateFaction(faction);           
             return RedirectToAction("CreateFaction");
         }
         public async Task<IActionResult> DetailsFaction(int? id)
         {
+            logger.LogInformation("[Faction]: Accesing the faction {0} details", id);
             if(id == null)
             {
+                logger.LogCritical("[Faction]: Id was null");
                 return NotFound();
             }
             return View(await factionOperations._context.Factions.FirstOrDefaultAsync(f => f.Id == id));
@@ -58,8 +66,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> EditFaction(int? id)
         {
+            logger.LogInformation("[Faction]: Accesing the edit view for {0}", id);
             if(id == null)
             {
+                logger.LogCritical("[Faction]: Id was null");
                 return NotFound();
             }
             // pe bune
@@ -70,7 +80,9 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditFaction(int id,/*[Bind("Id,FactionName,FactionDescription,Formations_")]*/FactionViewModel factionViewModel)
         {
+            logger.LogInformation("[Faction]: Editing the Faction with id {0}", id);
             if (factionViewModel.Faction_.Id != id) {
+                logger.LogCritical("[Faction]: Id was null");
                 return NotFound();
             }
             if (ModelState.IsValid)
@@ -85,10 +97,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> DeleteFaction(int? id)
         {
+            logger.LogInformation("[Faction]: Attempting to delete the faction with id {0} ", id);
             if(id == null)
-                {
-                    return NotFound();
-                }
+            {
+                logger.LogCritical("[Faction]: Id was null");
+                return NotFound();
+            }
             factionOperations._context.Factions.Remove(await factionOperations._context.Factions.FirstOrDefaultAsync(f => f.Id == id));
             await factionOperations._context.SaveChangesAsync();
             return RedirectToAction("IndexFaction");

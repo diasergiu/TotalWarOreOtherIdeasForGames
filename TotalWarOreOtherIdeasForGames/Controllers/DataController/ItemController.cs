@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TotalWarDLA.Models;
 using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.DataBaseOperations;
@@ -15,19 +16,18 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class ItemController : Controller
     {
+        private readonly ILogger logger;
         private readonly ItemsOperations operations;
 
-        public ItemController(TotalWarWanaBeContext context)
+        public ItemController(TotalWarWanaBeContext context, ILogger<ItemController> logger)
         {
+            this.logger = logger;
             this.operations = new ItemsOperations(context);
         }
 
         public async Task<IActionResult> IndexItem(int? CurrentPage, int? PageSize)
         {
-            //if (page == null)
-            //{
-            //    return View(PageModel<Item>.ToPageModel(operations._context.Items, 1, 5));
-            //}
+            logger.LogInformation("[Item]:");
             if (CurrentPage == null || CurrentPage == 0)
             {
                 CurrentPage = 1;
@@ -40,8 +40,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> DetailsItem(int? id)
         {
+            logger.LogInformation("[Item]");
             if (id == null)
             {
+                logger.LogCritical("[Item]:");
                 return NotFound();
             }
 
@@ -56,6 +58,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public  IActionResult CreateItem()
         {
+            logger.LogInformation("[Item]");
             ViewData["Formations"] = new SelectList(operations._context.Formations, "Id", "FormationName");
             return View();
         }
@@ -64,6 +67,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateItem(/*[Bind("Id,StaminaCost,SpeedCost,ItemName")]*/[FromForm]ItemViewModel item)
         {
+            logger.LogInformation("[Item]");
             if (ModelState.IsValid)
             {
                 item.Item_.Image = ImageConverter.Encryption(item.ImageFile);
@@ -80,8 +84,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 
         public async Task<IActionResult> EditItem(int? id)
         {
+            logger.LogInformation("[Item]");
             if (id == null)
             {
+                logger.LogCritical("[Item]:");
                 return NotFound();
             }
             ViewData["Formations"] = new SelectList(operations._context.Formations, "Id", "FormationName");
@@ -108,8 +114,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditItem(int id,ItemViewModel item)
         {
+            logger.LogInformation("[Item]");
             if (id != item.Item_.Id)
             {
+                logger.LogCritical("[Item]:");
                 return NotFound();
             }
 
@@ -152,6 +160,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 {
                     if (!ItemExists(item.Item_.Id))
                     {
+                        logger.LogCritical("[Item]:");
                         return NotFound();
                     }
                     else
@@ -165,8 +174,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> DeleteItem(int? id)
         {
+            logger.LogInformation("[Item]");
             if (id == null)
             {
+                logger.LogCritical("[Item]:");
                 return NotFound();
             }
             var item = await operations._context.Items.FindAsync(id);

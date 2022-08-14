@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TotalWarDLA.Models;
 using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.DataBaseOperations;
@@ -13,10 +14,12 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class HorseController : Controller
     {
+        private readonly ILogger logger;
         private readonly HorsesOperations operations;
 
-        public HorseController(TotalWarWanaBeContext context)
+        public HorseController(TotalWarWanaBeContext context, ILogger<HorseController> logger)
         {
+            this.logger = logger;
             this.operations = new HorsesOperations(context);
         }
 
@@ -26,6 +29,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // it violates variabe naming convention
         public async Task<IActionResult> IndexHorse(int? CurrentPage, int? PageSize) 
         {
+            logger.LogInformation("[Horse]");
             if (CurrentPage == null || CurrentPage == 0)
             {
                 CurrentPage = 1;
@@ -40,8 +44,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Horse/Details/5
         public async Task<IActionResult> DetailsHorse(int? id)
         {
+            logger.LogInformation("[Horse]");
             if (id == null)
             {
+                logger.LogCritical("[Horse]:");
                 return NotFound();
             }
 
@@ -50,6 +56,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (horse == null)
             {
+                logger.LogCritical("[Horse]:");
                 return NotFound();
             }
 
@@ -59,6 +66,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Horse/Create
         public IActionResult CreateHorse()
         {
+            logger.LogInformation("[Horse]");
             ViewData["Bardings"] = new SelectList(operations._context.Bardings, "Id", "BardingName");
             return View();
         }
@@ -70,6 +78,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateHorse([Bind("Id,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
         {
+            logger.LogInformation("[Horse]");
             if (ModelState.IsValid)
             {
                 operations._context.Add(horse);
@@ -83,8 +92,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Horse/Edit/5
         public async Task<IActionResult> EditHorse(int? id)
         {
+            logger.LogInformation("[Horse]");
             if (id == null)
             {
+                logger.LogCritical("[Horse]:");
                 return NotFound();
             }
 
@@ -104,8 +115,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditHorse(int id, [Bind("Id,AttackModifier,BreedName,DefenceModifiered,HorseStamina,HorseStrength,IdBarding")] Horse horse)
         {
+            logger.LogInformation("[Horse]");
             if (id != horse.Id)
             {
+                logger.LogCritical("[Horse]:");
                 return NotFound();
             }
 
@@ -120,6 +133,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 {
                     if (!HorseExists(horse.Id))
                     {
+                        logger.LogCritical("[Horse]:");
                         return NotFound();
                     }
                     else
@@ -134,8 +148,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> DeleteHorse(int? id)
         {
+            logger.LogInformation("[Horse]");
             if (id == null)
             {
+                logger.LogCritical("[Horse]:");
                 return NotFound();
             }
             var horse = await operations._context.Horses.FindAsync(id);

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TotalWarDLA.Models;
 using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.DataBaseOperations;
@@ -13,16 +14,19 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class SoldierModelController : Controller
     {
+        private readonly ILogger logger;
         private readonly SoldierModelsOperations operations;
 
-        public SoldierModelController(TotalWarWanaBeContext context)
+        public SoldierModelController(TotalWarWanaBeContext context, ILogger<SoldierModelController> logger)
         {
+            this.logger = logger;
             operations = new SoldierModelsOperations(context);
         }
 
         // GET: SoldierModels
         public async Task<IActionResult> IndexSoldierModel(int? CurrentPage, int? PageSize)
         {
+            logger.LogInformation("[SoldierModel]");
             if (CurrentPage == null || CurrentPage == 0)
             {
                 CurrentPage = 1;
@@ -37,6 +41,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: SoldierModels/Details/5
         public async Task<IActionResult> DetailsSoldierModel(int? id)
         {
+            logger.LogInformation("[SoldierModel]");
             if (id == null)
             {
                 return NotFound();
@@ -55,6 +60,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: SoldierModels/Create
         public IActionResult CreateSoldierModel()
         {
+            logger.LogInformation("[SoldierModel]");
             return View();
         }
 
@@ -65,6 +71,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSoldierModel([Bind("Id,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
         {
+            logger.LogInformation("[SoldierModel]");
             if (ModelState.IsValid)
             {
                 operations._context.Add(soldierModel);
@@ -77,6 +84,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: SoldierModels/Edit/5
         public async Task<IActionResult> EditSoldierModel(int? id)
         {
+            logger.LogInformation("[SoldierModel]");
             if (id == null)
             {
                 return NotFound();
@@ -97,6 +105,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditSoldierModel(int id, [Bind("Id,AttackSkilll,DefenceSkill,Stamina,Speed,Acuracy,SoldierName")] SoldierModel soldierModel)
         {
+            logger.LogInformation("[SoldierModel]");
             if (id != soldierModel.Id)
             {
                 return NotFound();
@@ -113,6 +122,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
                 {
                     if (!SoldierModelExists(soldierModel.Id))
                     {
+                        logger.LogCritical("[SoldierModel]:");
                         return NotFound();
                     }
                     else
@@ -124,8 +134,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(soldierModel);
         }
-        public async Task<IActionResult> DeleteSoldierModel(int id)
+        public async Task<IActionResult> DeleteSoldierModel(int? id)
         {
+            logger.LogInformation("[SoldierModel]");
+            if(id == null)
+            {
+                logger.LogCritical("[SoldierModel]:");
+                return NotFound();
+            }
             var soldierModel = await operations._context.SoldierModels.FindAsync(id);
             operations._context.SoldierModels.Remove(soldierModel);
             await operations._context.SaveChangesAsync();

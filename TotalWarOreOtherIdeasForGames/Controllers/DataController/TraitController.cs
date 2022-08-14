@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TotalWarDLA.Models;
 using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.DataBaseOperations;
@@ -14,16 +15,19 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class TraitController : Controller
     {
+        private readonly ILogger logger;
         private readonly TraitsOperations operations;
 
-        public TraitController(TotalWarWanaBeContext context)
+        public TraitController(TotalWarWanaBeContext context, ILogger<TraitController> logger)
         {
+            this.logger = logger;
             this.operations = new TraitsOperations(context);
         }
 
         // GET: Trait
         public async Task<IActionResult> IndexTrait(int? CurrentPage, int? PageSize)
         {
+            logger.LogInformation("[Trait]:");
             if (CurrentPage == null || CurrentPage == 0)
             {
                 CurrentPage = 1;
@@ -38,6 +42,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Trait/Details/5
         public async Task<IActionResult> DetailsTrait(int? id)
         {
+            logger.LogInformation("[Trait]:");
             if (id == null)
             {
                 return NotFound();
@@ -56,6 +61,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Trait/Create
         public IActionResult CreateTrait()
         {
+            logger.LogInformation("[Trait]:");
             ViewData["Formations_"] = new SelectList(operations._context.Formations.ToList(), "Id", "FormationName");
             return View();
         }
@@ -67,6 +73,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTrait(TraitViewModel trait)
         {
+            logger.LogInformation("[Trait]:");
             if (ModelState.IsValid)
             {
                 operations._context.Traits.Add(trait.Trait_);
@@ -82,6 +89,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Trait/Edit/5
         public async Task<IActionResult> EditTrait(int? id)
         {
+            logger.LogInformation("[Trait]:");
             if (id == null)
             {
                 return NotFound();
@@ -111,6 +119,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditTrait(int id, TraitViewModel traitViewModel)
         {
+            logger.LogInformation("[Trait]:");
             if (id != traitViewModel.Trait_.Id)
             {
                 return NotFound();
@@ -175,7 +184,8 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> DeleteTrait(int? id)
         {
-            if(id == null)
+            logger.LogInformation("[Trait]:");
+            if (id == null)
             {
                 return NotFound();
             }

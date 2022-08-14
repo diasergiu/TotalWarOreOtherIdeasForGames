@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TotalWarDLA.Models;
 using TotalWarDLA.Models.Pagination;
 using TotalWarOreOtherIdeasForGames.DataBaseOperations;
@@ -14,16 +15,19 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
     public class FormationController : Controller
     {
+        private readonly ILogger logger;
         private readonly FormationsOperations formationOperations;
 
-        public FormationController(TotalWarWanaBeContext context)
+        public FormationController(TotalWarWanaBeContext context,ILogger<FormationController> logger)
         {
+            this.logger = logger;
             this.formationOperations = new FormationsOperations(context);
         }
 
         // GET: Formation
         public async  Task<IActionResult> IndexFormation(int? CurrentPage, int? PageSize)
         {
+            logger.LogInformation("[Formation]");
             if (CurrentPage == null || CurrentPage == 0)
             {
                 CurrentPage = 1;
@@ -38,8 +42,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Formation/Details/5
         public async Task<IActionResult> DetailsFormation(int? id)
         {
+            logger.LogInformation("[Formation]");
             if (id == null)
             {
+                logger.LogCritical("[Formation]");
                 return NotFound();
             }
 
@@ -55,6 +61,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Formation/Create
         public IActionResult CreateFormation()
         {
+            logger.LogInformation("[Formation]");
             ViewData["Horses"] = new SelectList(formationOperations._context.Horses, "Id", "BreedName");
             ViewData["Soldiers"] = new SelectList(formationOperations._context.SoldierModels, "Id", "SoldierName");
             ViewData["Traits"] = new SelectList(formationOperations._context.Traits, "Id", "TraitName");
@@ -70,6 +77,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateFormation( FormationViewModel formation)
         {
+            logger.LogInformation("[Formation]");
             if (ModelState.IsValid)
             {
                 
@@ -87,8 +95,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         // GET: Formation/Edit/5
         public async Task<IActionResult> EditFormation(int? id)
         {
+            logger.LogInformation("[Formation]");
             if (id == null)
             {
+                logger.LogCritical("[Formation]");
                 return NotFound();
             }
             FormationViewModel formationViewModel = await formationOperations.GetViewModel((int)id);
@@ -111,8 +121,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditFormation(int id,  FormationViewModel formationViewModel)
         {
+            logger.LogInformation("[Formation]");
             if (id != formationViewModel.Formation_.Id)
             {
+                logger.LogCritical("[Formation]");
                 return NotFound();
             }
 
@@ -141,8 +153,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> DeleteFormation(int? id)
         {
+            logger.LogInformation("[Formation]:");
             if (id == null)
             {
+                logger.LogCritical("[Formation]:");
                 return NotFound();
             }
             await formationOperations.DeleteFormation((int)id);
