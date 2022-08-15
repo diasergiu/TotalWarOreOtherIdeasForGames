@@ -17,7 +17,7 @@ Multiple databases for 1 application
 From microsof:
 Web apps MVC
 Fundamentals
-Data Access
+Data Access ( data access not just for specific controllers but to specific entities of the specific model like )
 Test debug, and troubleshoot
 Performance
 Model buinder

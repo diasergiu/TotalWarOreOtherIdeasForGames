@@ -27,6 +27,7 @@ namespace TotalWarDLA.Models
         public virtual DbSet<FormationTrait> FormationTraits { get; set; }
         public virtual DbSet<SoldierModel> SoldierModels { get; set; }
         public virtual DbSet<Trait> Traits { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -175,6 +176,7 @@ namespace TotalWarDLA.Models
 
             OnModelCreatingPartial(modelBuilder);
         }
+           
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
