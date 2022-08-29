@@ -5,7 +5,6 @@ To Unit test
 
 Finnish The Opperation classes
 Add byte image to the rest
-Delete on index page 
 Pagination UI  ( next we need to make the get method to send PageModel object, Get method usualy read only the URL query string but i dont think you cant do it)
 				( meby the PageModel should be in a ViewModel class)
 				(Pagination should have numbers that you can chose from)

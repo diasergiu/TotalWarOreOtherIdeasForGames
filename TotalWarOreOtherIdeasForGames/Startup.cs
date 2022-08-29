@@ -49,6 +49,7 @@ namespace TotalWarOreOtherIdeasForGames
             app.UseHttpsRedirection();
             app.UseSession();
             app.UseMiddleware<AuthentificationMiddleware>();
+            app.UseMiddleware<AuthorizationMiddleware>();
             app.UseRouting();
 
             

@@ -1,10 +1,17 @@
-﻿<h1>Login</h1>
+﻿@model TotalWarDLA.Models.User 
+<h1>Login</h1>
 <form asp-action="Login">
     <label>Username</label>
-    <input type="text" name="UserName" />
+    <input asp-for="UserName" />
     <label>Password</label>
-    <input type="password" name="Password" />
+    <input asp-for="Password" type="password"/>
     <input type="submit" value="Submit" />
 </form>
+<a asp-action="Register" class="btn btn-info">Make new Account</a>
 
+@*this should be in the navbar*@ 
 @ViewBag.Username
+@if (ViewBag.Username != null)
+{
+    <a asp-action="Logout" class="btn btn-group">logout</a>
+}

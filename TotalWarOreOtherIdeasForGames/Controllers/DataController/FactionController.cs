@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,10 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> IndexFaction(int? CurrentPage, int? PageSize)
         {
+            if(HttpContext.Session.GetInt32("UserType") < 2)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             logger.LogInformation("[Faction]: Oppened index with curent page {0} and page size {1} ", CurrentPage, PageSize);
             if (CurrentPage == null || CurrentPage == 0)
             {
