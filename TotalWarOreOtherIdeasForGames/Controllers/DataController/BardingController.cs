@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,6 +12,7 @@ using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
+    [Authorize(Roles = "Normal,Manager,Admin")]
     public class BardingController : Controller
     {
         private readonly ILogger logger;
@@ -36,6 +38,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(PageModel<Barding>.ToPageModel(operations._context.Bardings,(int)CurrentPage, (int)PageSize));
         }
+        [Authorize(Roles = "Manager,Admin")]
         public IActionResult CreateBarding()
         {
             logger.LogInformation("[Barding]: Accesing the barding create View");
@@ -53,6 +56,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return RedirectToAction("CreateBarding");
 
         }
+       
         public async Task<IActionResult> DetailsBarding(int? id)
         {
             logger.LogInformation("[Barding}: you are looking at the detail of the barding with the id : {0}", id);
@@ -69,6 +73,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(barding);
         }
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<IActionResult> EditBarding(int? id)
         {
             logger.LogInformation("[Barding]: you are oppening the edit view for barding with id {0}", id);
@@ -120,7 +125,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return RedirectToAction("EditBarding");
         }
-
+        [Authorize(Roles = "Manager,Admin")]
         // again Delete probabli should be a post method 
         public async Task<IActionResult> DeleteBarding(int? id)
         {

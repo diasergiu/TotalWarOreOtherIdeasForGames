@@ -16,6 +16,10 @@ using TotalWarDLA.Models;
 using System.IO;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using TotalWarOreOtherIdeasForGames.Middleware;
+using Microsoft.AspNetCore.Http;
+using TotalWarDLA.Models.Enum;
+using TotalWarOreOtherIdeasForGames.DataBaseOperations.Autorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TotalWarOreOtherIdeasForGames
 {
@@ -33,8 +37,30 @@ namespace TotalWarOreOtherIdeasForGames
         {            
             services.AddControllers();
             services.AddMvc();
-            services.AddMemoryCache();
-            services.AddSession();
+
+            //// dont forget to delete this if it workes
+            //services.AddMemoryCache();
+            //services.AddSession();
+
+            // if this workes i might not need memory cacher
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                // is this how you do it/ also i assume that i target httpPost methods
+                options.LoginPath = new PathString("/Login");
+                options.LogoutPath = new PathString("/Login/Logout");
+            });
+            services.AddSingleton<IAuthorizationHandler, AutorizationHandlerPermision>();
+            services.AddAuthorization(options =>
+            {              
+                //options.AddPolicy("Manager", policy => policy.Requirements.Add(new RoleAuthorization("Manager")));
+                //options.AddPolicy("Normal", policy => policy.Requirements.Add(new RoleAuthorization("Normal")));
+                //options.AddPolicy("Admin", policy => policy.Requirements.Add(new RoleAuthorization("Admin")));
+
+                // i dont know how i get the role from my users. i dont actually know what anything about roles
+                // how do i make him understant witch varialbe should he compare to
+                options.AddPolicy("RolebasedPolicy", policy => policy.RequireRole("Admin", "Manager", "Normal"));
+            });
             services.AddDbContext<TotalWarWanaBeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
@@ -47,12 +73,17 @@ namespace TotalWarOreOtherIdeasForGames
             }
             loggerFactory.AddFile("Logs/Log-{Date}.txt");
             app.UseHttpsRedirection();
-            app.UseSession();
-            app.UseMiddleware<AuthentificationMiddleware>();
-            app.UseMiddleware<AuthorizationMiddleware>();
+            //app.UseSession();
+            //// dont forget to delete this 2 if the coockie workes
+            //app.UseMiddleware<AuthentificationMiddleware>();
+            //app.UseMiddleware<AuthorizationMiddleware>();
+
             app.UseRouting();
 
-            
+            app.UseAuthentication();
+            // it saide something about this beeing in between UseRouting and UseEndpoint
+            app.UseAuthorization();
+
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(

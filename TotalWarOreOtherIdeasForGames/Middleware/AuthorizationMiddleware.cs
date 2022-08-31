@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace TotalWarOreOtherIdeasForGames.Middleware
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
+    // used when i used session
     public class AuthorizationMiddleware
     {
         private readonly RequestDelegate _next;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TotalWarOreOtherIdeasForGames.DataBaseOperations.Authentification
 {
+    // used with session
     public class LogoutManager
     {
         public bool IsLogedIt(HttpContext context)

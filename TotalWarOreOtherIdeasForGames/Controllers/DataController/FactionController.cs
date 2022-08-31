@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
+    [Authorize(Roles = "Manager, Admin")]
     public class FactionController : Controller
     {
 
@@ -25,10 +27,6 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
         public async Task<IActionResult> IndexFaction(int? CurrentPage, int? PageSize)
         {
-            if(HttpContext.Session.GetInt32("UserType") < 2)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             logger.LogInformation("[Faction]: Oppened index with curent page {0} and page size {1} ", CurrentPage, PageSize);
             if (CurrentPage == null || CurrentPage == 0)
             {
@@ -40,6 +38,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(PageModel<Faction>.ToPageModel(factionOperations._context.Factions, (int)CurrentPage, (int)PageSize));
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateFaction()
         {
             logger.LogInformation("[Faction]: Accesing the create View ");
@@ -69,6 +68,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(await factionOperations._context.Factions.FirstOrDefaultAsync(f => f.Id == id));
 
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditFaction(int? id)
         {
             logger.LogInformation("[Faction]: Accesing the edit view for {0}", id);
@@ -100,6 +100,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return RedirectToAction("EditFaction");
 
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteFaction(int? id)
         {
             logger.LogInformation("[Faction]: Attempting to delete the faction with id {0} ", id);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
+    [Authorize(Roles = "Manager,Admin")]
     public class SoldierModelController : Controller
     {
         private readonly ILogger logger;
@@ -57,7 +59,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(soldierModel);
         }
 
-        // GET: SoldierModels/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateSoldierModel()
         {
             logger.LogInformation("[SoldierModel]");
@@ -81,7 +83,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(soldierModel);
         }
 
-        // GET: SoldierModels/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditSoldierModel(int? id)
         {
             logger.LogInformation("[SoldierModel]");
@@ -134,6 +136,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(soldierModel);
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteSoldierModel(int? id)
         {
             logger.LogInformation("[SoldierModel]");

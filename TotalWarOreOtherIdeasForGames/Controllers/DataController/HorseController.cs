@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using TotalWarOreOtherIdeasForGames.DataBaseOperations;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
+    [Authorize(Roles = "Normal,Manager,Admin")]
     public class HorseController : Controller
     {
         private readonly ILogger logger;
@@ -64,6 +66,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
         }
 
         // GET: Horse/Create
+        [Authorize(Roles = "Manager,Admin")]
         public IActionResult CreateHorse()
         {
             logger.LogInformation("[Horse]");
@@ -89,7 +92,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(horse);
         }
 
-        // GET: Horse/Edit/5
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<IActionResult> EditHorse(int? id)
         {
             logger.LogInformation("[Horse]");
@@ -146,6 +149,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             ViewData["Bardings"] = new SelectList(operations._context.Bardings, "Id", "Id", horse.IdBarding);
             return View(horse);
         }
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<IActionResult> DeleteHorse(int? id)
         {
             logger.LogInformation("[Horse]");

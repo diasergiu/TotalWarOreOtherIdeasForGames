@@ -9,6 +9,7 @@ using TotalWarDLA.Models.Enum;
 namespace TotalWarOreOtherIdeasForGames.Middleware
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
+    // used when i used session
     public class AuthentificationMiddleware
     {
         private readonly RequestDelegate _next;

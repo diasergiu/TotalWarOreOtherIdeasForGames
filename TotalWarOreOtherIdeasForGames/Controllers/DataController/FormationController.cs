@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
+    [Authorize(Roles = "Manager,Admin")]
     public class FormationController : Controller
     {
         private readonly ILogger logger;
@@ -58,7 +60,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(Formation);
         }
 
-        // GET: Formation/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateFormation()
         {
             logger.LogInformation("[Formation]");
@@ -92,7 +94,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(formation);
         }
 
-        // GET: Formation/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditFormation(int? id)
         {
             logger.LogInformation("[Formation]");
@@ -151,6 +153,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             ViewData["Soldiers"] = new SelectList(formationOperations._context.SoldierModels, "Id", "Id", formationViewModel.Formation_.IdSoldier);
             return View(formationViewModel);
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteFormation(int? id)
         {
             logger.LogInformation("[Formation]:");

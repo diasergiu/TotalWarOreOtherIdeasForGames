@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
+    [Authorize(Roles = "Normal,Manager,Admin")]
     public class ItemController : Controller
     {
         private readonly ILogger logger;
@@ -56,6 +58,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             ViewBag.imgsrc = ImageConverter.Decrypt(item.Image);
             return View(item);
         }
+        [Authorize(Roles = "Manager,Admin")]
         public  IActionResult CreateItem()
         {
             logger.LogInformation("[Item]");
@@ -81,7 +84,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(item);
         }
-
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<IActionResult> EditItem(int? id)
         {
             logger.LogInformation("[Item]");
@@ -172,6 +175,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(item);
         }
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<IActionResult> DeleteItem(int? id)
         {
             logger.LogInformation("[Item]");

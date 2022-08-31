@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using TotalWarOreOtherIdeasForGames.ViewModel;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
 {
+    [Authorize(Roles = "Normal,Manager,Admin")]
     public class TraitController : Controller
     {
         private readonly ILogger logger;
@@ -58,7 +60,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(trait);
         }
 
-        // GET: Trait/Create
+        [Authorize(Roles = "Manager,Admin")]
         public IActionResult CreateTrait()
         {
             logger.LogInformation("[Trait]:");
@@ -86,7 +88,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             return View(trait);
         }
 
-        // GET: Trait/Edit/5
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<IActionResult> EditTrait(int? id)
         {
             logger.LogInformation("[Trait]:");
@@ -182,6 +184,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers.DataController
             }
             return View(traitViewModel);
         }
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<IActionResult> DeleteTrait(int? id)
         {
             logger.LogInformation("[Trait]:");
