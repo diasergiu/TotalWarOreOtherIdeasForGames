@@ -7,7 +7,10 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="CreateTrait">Create New</a>
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
+        <a asp-action="CreateTrait">Create New</a>
+    }
 </p>
 <table class="table">
     <thead>
@@ -34,9 +37,15 @@
                     @Html.DisplayFor(modelItem => item.TraitName)
                 </td>
                 <td>
-                    <a asp-action="EditTrait" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="DetailsTrait" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="DeleteTrait" asp-route-id="@item.Id">Delete</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <a asp-action="EditTrait" asp-route-id="@item.Id">Edit</a>
+                    }
+                    <a asp-action="DetailsTrait" asp-route-id="@item.Id">Details</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <a asp-action="DeleteTrait" asp-route-id="@item.Id">Delete</a>
+                    }
                 </td>
             </tr>
         }

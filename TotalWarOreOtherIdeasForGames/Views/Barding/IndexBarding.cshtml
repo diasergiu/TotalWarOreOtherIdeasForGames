@@ -4,43 +4,53 @@
 }
 
 <h1> Index</h1>
-<p>
-    <a asp-action="CreateBarding">Create</a>
-    <table class="table">
-        <thead>
-            <tr>
-                @*i dont want to let this be fixed ore shol we say hardcoded HTML
-                        <th>
-                        @Html.DisplayNameFor(model => model.BardingName)
-                    </th>
+@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+{
+    <p>
+        <a asp-action="CreateBarding">Create</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            @*i dont want to let this be fixed ore shol we say hardcoded HTML
                     <th>
-                        @Html.DisplayNameFor(model => model.ArmorValue)
-                    </th>*@
-                <th>Barding Name</th>
-                <th>Armor Value</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BardingName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ArmorValue)
-                    </td>
-                    <td>
+                    @Html.DisplayNameFor(model => model.BardingName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ArmorValue)
+                </th>*@
+            <th>Barding Name</th>
+            <th>Armor Value</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BardingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArmorValue)
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
                         <a asp-action="EditBarding" asp-route-id="@item.Id">Edit</a>
-                        <a asp-action="DetailsBarding" asp-route-id="@item.Id">Details</a>
+                    }
+                    <a asp-action="DetailsBarding" asp-route-id="@item.Id">Details</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
                         <a asp-action="DeleteBarding" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    </p>
 @{
     if (Model.HasPrevios)
     {

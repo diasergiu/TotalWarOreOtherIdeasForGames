@@ -5,10 +5,12 @@
 }
 
 <h1>Index</h1>
-
-<p>
-    <a asp-action="CreateFaction">Create New</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="CreateFaction">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -34,9 +36,15 @@
                     @Html.DisplayFor(modelItem => item.FactionDescription)
                 </td>
                 <td>
-                    <a asp-action="EditFaction" asp-route-id="@item.Id">Edit</a> |
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="EditFaction" asp-route-id="@item.Id">Edit</a>
+                    }
                     <a asp-action="DetailsFaction" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="DeleteFaction" asp-route-id="@item.Id">Delete</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="DeleteFaction" asp-route-id="@item.Id">Delete</a>
+                    }
                 </td>
             </tr>
         }

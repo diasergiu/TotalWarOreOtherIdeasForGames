@@ -5,77 +5,85 @@
 }
 
 <h1>Index</h1>
-
-<p>
-    <a asp-action="CreateHorse">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.AttackModifier)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BreedName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DefenceModifiered)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HorseStamina)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HorseStrength)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdBardingNavigation)
-                </th>*@
-            <th>Attack Modifiers</th>
-            <th>Breed Name </th>
-            <th>Defence Modifierd</th>
-            <th>Horse Stamina</th>
-            <th>Id Barding Navigation</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AttackModifier)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BreedName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DefenceModifiered)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HorseStamina)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HorseStrength)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdBardingNavigation.Id)
-                </td>
-                <td>
-                    <a asp-action="EditHorse" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="DetailsHorse" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="DeleteHorse" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-@{
-    if (Model.HasPrevios)
-    {
-        <a asp-action="IndexHorse" asp-route-CurrentPage="@(Model.CurrentPage - 1)" class="btn btn-default">previos</a>
-    }
-    if (Model.HasNext)
-    {
-        <a asp-action="IndexHorse" asp-route-CurrentPage="@(Model.CurrentPage + 1)" class="btn btn-default"> Next</a>
-    }
+@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+{
+    <p>
+        <a asp-action="CreateHorse">Create New</a>
+    </p>
 }
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.AttackModifier)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BreedName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DefenceModifiered)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HorseStamina)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HorseStrength)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IdBardingNavigation)
+                    </th>*@
+                <th>Attack Modifiers</th>
+                <th>Breed Name </th>
+                <th>Defence Modifierd</th>
+                <th>Horse Stamina</th>
+                <th>Id Barding Navigation</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AttackModifier)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BreedName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DefenceModifiered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HorseStamina)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HorseStrength)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdBardingNavigation.Id)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                        {
+                            <a asp-action="EditHorse" asp-route-id="@item.Id">Edit</a>
+                        }
+                        <a asp-action="DetailsHorse" asp-route-id="@item.Id">Details</a>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                        {
+                            <a asp-action="DeleteHorse" asp-route-id="@item.Id">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @{
+        if (Model.HasPrevios)
+        {
+            <a asp-action="IndexHorse" asp-route-CurrentPage="@(Model.CurrentPage - 1)" class="btn btn-default">previos</a>
+        }
+        if (Model.HasNext)
+        {
+            <a asp-action="IndexHorse" asp-route-CurrentPage="@(Model.CurrentPage + 1)" class="btn btn-default"> Next</a>
+        }
+    }

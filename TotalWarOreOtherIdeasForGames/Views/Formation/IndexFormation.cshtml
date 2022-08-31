@@ -5,10 +5,12 @@
 }
 
 <h1>Index</h1>
-
-<p>
-    <a asp-action="CreateFormation">Create New</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="CreateFormation">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -55,9 +57,15 @@
                     @Html.DisplayFor(modelItem => item.IdSoldierNavigation.Id)
                 </td>
                 <td>
-                    <a asp-action="EditFormation" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="DetailsFormation" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="DeleteFormation" asp-route-id="@item.Id">Delete</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="EditFormation" asp-route-id="@item.Id">Edit</a>
+                    }
+                    <a asp-action="DetailsFormation" asp-route-id="@item.Id">Details</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="DeleteFormation" asp-route-id="@item.Id">Delete</a>
+                    }
                 </td>
             </tr>
         }
