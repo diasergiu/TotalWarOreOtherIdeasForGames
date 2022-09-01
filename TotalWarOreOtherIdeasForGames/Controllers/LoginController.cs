@@ -50,6 +50,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers
             claims.Add(new Claim(ClaimTypes.Name, _user.UserName));
             claims.Add(new Claim(ClaimTypes.Email, _user.Email));
             claims.Add(new Claim(ClaimTypes.Role, _user.UserType.ToString()));
+            claims.Add(new Claim("IdUser", _user.IdUser.ToString()));
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -79,7 +80,7 @@ namespace TotalWarOreOtherIdeasForGames.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             //// the old way 
@@ -88,6 +89,16 @@ namespace TotalWarOreOtherIdeasForGames.Controllers
             await HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> UserDetails(string name)
+        {
+            if(name == null)
+            {
+                return BadRequest();
+            }
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.UserName== name);
+            return View(user);
         }
     }
 }

@@ -1,0 +1,28 @@
+﻿@*@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager*@
+
+<ul class="navbar-nav ml-auto">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Login" asp-action="UserDetails" asp-route-name="@User.Identity.Name">@User.Identity.Name</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-controller="Login" asp-action="Logout">
+                <button type="submit" class="nav-link btn btn-link text-dark">
+                    Logout
+                </button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Login" asp-action="Index">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Login" asp-action="Register">Register</a>
+        </li>
+    }
+</ul>
