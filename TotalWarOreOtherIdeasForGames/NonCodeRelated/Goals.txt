@@ -7,14 +7,10 @@ Made the deletion and the updating with relationships
 Filtering : ( soldiersFormation with: factions, horses(if they have one), attack, defance, Stamina) 
 Searching
 Warrning whan we want to delete something in the database
-encripted password
+
 Immage Encripted into database
 Deploy: instantiate database with data in it.
-
 pagination (We dont have in the UI the posibility to chose the number of items in a page, and we do not have the multiple pages to chose from)
-Log in : Autentification ( we just put in session the UserNmae and the UserType)
-		 Atorization (We dont use atrributes, we just have in a middleware what level of userType is accepted)
-					  We have a UserType level not a type of user that have accese to diferent sites, That means that is we want to give a user diferent level of accese we cannot
 Logger: finnish the messages.
 
 Multiple databases for 1 application( just an idea)
@@ -28,3 +24,11 @@ Data Access ( data access not just for specific controllers but to specific enti
 Test debug, and troubleshoot
 Performance
 Model buinder
+
+
+
+Done 
+Log in : Autentification ( we just put in session the UserNmae and the UserType)
+		 Atorization (We dont use atrributes, we just have in a middleware what level of userType is accepted)
+					  We have a UserType level not a type of user that have accese to diferent sites, That means that is we want to give a user diferent level of accese we cannot
+encripted password

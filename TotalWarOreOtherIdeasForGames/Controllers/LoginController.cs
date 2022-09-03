@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TotalWarDLA.Models;
+using TotalWarOreOtherIdeasForGames.Services;
 
 namespace TotalWarOreOtherIdeasForGames.Controllers
 {
@@ -30,12 +31,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string UserName, string Password)
         {
-            
+
             if (UserName == null || Password == null)
             {
                 return View("Index");
             }
-            User _user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == UserName && u.Password == Password);
+            byte[] encrypt = EncryptDecryptService.EncryptString(Password);
+            User OldUserser = _context.Users.FirstOrDefault(u => u.UserName == UserName);
+            User _user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == UserName && u.Password == encrypt);
             if (_user == null)
             {
                 return View("Index");
@@ -75,6 +78,14 @@ namespace TotalWarOreOtherIdeasForGames.Controllers
             {
                 return BadRequest();
             }
+
+            _user.Password = EncryptDecryptService.EncryptString(_user.UiPassword);
+            User checkIfExiest = await _context.Users.FirstOrDefaultAsync(u => u.UserName == _user.UserName && u.Password == _user.Password);
+            if (checkIfExiest != null)
+            {
+                ViewBag.Error = "UserName and Password already used";
+                return View("Register");
+            }
             _context.Users.Add(_user);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -91,14 +102,49 @@ namespace TotalWarOreOtherIdeasForGames.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> UserDetails(string name)
+        public async Task<IActionResult> UserDetails(int? id)
         {
-            if(name == null)
+            if (id == null)
             {
                 return BadRequest();
             }
-            User user = await _context.Users.FirstOrDefaultAsync(u => u.UserName== name);
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == id);
             return View(user);
+        }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ManageUsersList()
+        {
+            var Users = await _context.Users.ToListAsync();
+            return View(Users);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AproveUser(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.IdUser == id);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            return View(user);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> AproveUser(User userAproved)
+        {
+            if(userAproved == null)
+            {
+                return BadRequest();
+            }
+            _context.Users.Update(userAproved);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ManageUsersList");
         }
     }
 }

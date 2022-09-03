@@ -15,6 +15,12 @@
                 </button>
             </form>
         </li>
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Login" asp-action="ManageUsersList">Aprove of Users</a>
+            </li>
+        }
     }
     else
     {

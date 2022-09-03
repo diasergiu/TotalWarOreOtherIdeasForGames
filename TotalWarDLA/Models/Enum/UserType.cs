@@ -6,8 +6,9 @@ namespace TotalWarDLA.Models.Enum
 {
     public enum UserType
     {
-        Normal = 0,
-        Manager = 1,
-        Admin = 2
+        Unregistered = 0,
+        Normal = 1,
+        Manager = 2,
+        Admin = 3
     }
 }
